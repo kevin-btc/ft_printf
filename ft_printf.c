@@ -9,10 +9,12 @@ int ft_printf(const char *format, ...)
 	int i;
 	char *new_str;
 	char *tmp;
+	char *c_to_s;
 
 
 	new_str = ft_strdup(format);
 	i = 0 ;
+	c_to_s = ft_strnew(1);
 	va_start(vl, format);
 	while (new_str[i])
 	{
@@ -23,10 +25,21 @@ int ft_printf(const char *format, ...)
 				tmp = ft_strsub(new_str , i + 2, ft_strlen(new_str));
 				new_str = ft_strjoin(ft_strsub(new_str,0 , i), va_arg(vl, char *));
 			}
+			if (new_str[i + 1] == 'c')
+			{
+				c_to_s[0] = va_arg(vl, int);
+				tmp = ft_strsub(new_str , i + 2, ft_strlen(new_str));
+				new_str = ft_strjoin(ft_strsub(new_str,0 , i), c_to_s);
+			}
 			if (new_str[i + 1] == 'd')
 			{
 				tmp = ft_strsub(new_str , i + 2, ft_strlen(new_str));
 				new_str = ft_strjoin(ft_strsub(new_str,0 , i), ft_itoa(va_arg(vl, int)));
+			}
+			if (new_str[i + 1] == '%')
+			{
+				tmp = ft_strsub(new_str , i + 2, ft_strlen(new_str));
+				new_str = ft_strjoin(ft_strsub(new_str,0 , i), "%");
 			}
 			new_str = ft_strjoin(new_str, tmp);
 		}
