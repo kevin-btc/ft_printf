@@ -5,15 +5,17 @@
 
 int main(int argc, char **argv)
 {
+	system("clear");
 	if (argc == 1)
 	{
+		ft_printf("Gestion de la conversion %%c, et le cas avec des espaces entre %% et c: \n\n");
+		ft_printf("ft_printf(\"affiche un seul caractere : %%    c\", 'k');\n-------------------------\n\n");
 		ft_putendl("ft_printf :");
-		ft_printf("affiche un seul caractere : %c", 'k');
+		ft_printf("affiche un seul caractere : %    c", 'k');
 		ft_putchar('\n');
 		ft_putchar('\n');
 		ft_putendl("printf :");
-		printf("affiche un seul caractere : %c", 'k');
-		ft_putchar('\n');
+		printf("affiche un seul caractere : %    c\n", 'k');
 	}
 	
 	if (argc == 2)
@@ -24,7 +26,6 @@ int main(int argc, char **argv)
 		ft_putchar('\n');
 		ft_putendl("printf :");
 		printf(argv[1]);
-		ft_putchar('\n');
 	}
 	if (argc == 3)
 	{
@@ -34,7 +35,6 @@ int main(int argc, char **argv)
 		ft_putchar('\n');
 		ft_putendl("printf :");
 		printf(argv[1], argv[2]);
-		ft_putchar('\n');
 	}
 	if (argc == 4)
 	{
@@ -44,7 +44,6 @@ int main(int argc, char **argv)
 		ft_putchar('\n');
 		ft_putendl("printf :");
 		printf(argv[1], argv[2], argv[3]);
-		ft_putchar('\n');
 	}
 	if (argc == 5)
 	{
@@ -54,7 +53,6 @@ int main(int argc, char **argv)
 		ft_putchar('\n');
 		ft_putendl("printf :");
 		printf(argv[1], argv[2], argv[3], argv[4]);
-		ft_putchar('\n');
 	}
 	if (argc == 6)
 	{
@@ -64,7 +62,6 @@ int main(int argc, char **argv)
 		ft_putchar('\n');
 		ft_putendl("printf :");
 		printf(argv[1], argv[2], argv[3], argv[4], argv[5]);
-		ft_putchar('\n');
 	}
 	if (argc == 7)
 	{
