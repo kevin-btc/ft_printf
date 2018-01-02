@@ -77,9 +77,9 @@ int main(int argc, char **argv)
 	}
 	if (argc > 7 )
 	{
-		ft_printf("Gestion de la conversion %%d et le cas %% : \n\n");
-		ft_printf("ft_printf(\"Mettre un nombre d'argument inferieure a 7 (actuel = %%d).\\n\", argc - 1);\n");
-		ft_printf("Mettre un nombre d'argument inferieure a 7 (actuel = %d).\n", argc - 1);
+		ft_printf("Gestion de la conversion %%i, %%d et le cas %% : \n\n");
+		ft_printf("ft_printf(\"Mettre un nombre d'argument inferieure a %%i (actuel = %%d).\\n\",7, argc - 1);\n");
+		ft_printf("Mettre un nombre d'argument inferieure a %i (actuel = %d).\n",7, argc - 1);
 	}
 	return (0);
 }

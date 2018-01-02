@@ -31,7 +31,7 @@ int ft_printf(const char *format, ...)
 				tmp = ft_strsub(new_str , i + 2, ft_strlen(new_str));
 				new_str = ft_strjoin(ft_strsub(new_str,0 , i), c_to_s);
 			}
-			if (new_str[i + 1] == 'd')
+			if (new_str[i + 1] == 'd'|| new_str[i + 1] == 'i')
 			{
 				tmp = ft_strsub(new_str , i + 2, ft_strlen(new_str));
 				new_str = ft_strjoin(ft_strsub(new_str,0 , i), ft_itoa(va_arg(vl, int)));
