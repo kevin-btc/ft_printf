@@ -1,21 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/04 19:44:46 by kgricour          #+#    #+#             */
+/*   Updated: 2018/01/15 21:24:32 by kgricour         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "ft_printf.h"
 #include <stdio.h>
-#include "libft/libft.h"
+#include "ft_printf.h"
+#include <locale.h>
+
 
 int main(int argc, char **argv)
 {
-	system("clear");
+	char *locale;
+
+	locale = setlocale(LC_ALL, "");
+	//system("clear");
 	if (argc == 1)
 	{
 		ft_printf("Gestion de la conversion %%c, et le cas avec des espaces entre %% et c: \n\n");
 		ft_printf("ft_printf(\"affiche un seul caractere : %%    c\", 'k');\n-------------------------\n\n");
 		ft_putendl("ft_printf :");
-		ft_printf("affiche un seul caractere : %    c", 'k');
+		ft_printf("affiche un seul caractere : %    C", 0x1f0);
 		ft_putchar('\n');
 		ft_putchar('\n');
 		ft_putendl("printf :");
-		printf("affiche un seul caractere : %    c\n", 'k');
+		printf("affiche un seul caractere : %    C\n", 0x1f0);
 	}
 	
 	if (argc == 2)

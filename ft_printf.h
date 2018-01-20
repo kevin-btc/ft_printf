@@ -1,6 +1,20 @@
-#ifndef FT_PRINTF_C
-# define FT_PRINTF_C
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/14 21:03:11 by kgricour          #+#    #+#             */
+/*   Updated: 2018/01/14 21:29:53 by kgricour         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	ft_printf(const char *format, ...);
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
+
+# include "libft.h"
+
+int ft_printf(const char *format, ...);
 
 #endif

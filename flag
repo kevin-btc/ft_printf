@@ -1,0 +1,80 @@
+s : fait 
+spécifie une chaîne de caractères codés sur un octet ou multioctets
+
+S : 
+spécifie une chaîne de caractères larges
+
+p : fait 
+Affiche l’argument sous forme d’adresse composée de chiffres hexadécimaux.
+
+d : fait 
+Entier décimal signé
+
+D :
+?
+
+i : fait 
+Entier décimal signé
+
+o :
+Entier octal non signé.
+
+O :
+?
+
+u : 
+Entier décimal non signé.
+
+U :
+?
+
+x :
+Entier hexadécimal non signé ; utilise « abcdef ».
+
+X :
+Entier hexadécimal non signé ; utilise « ABCDEF ».
+
+c :       
+spécifie un caractère codé sur un octet 
+
+C :
+spécifie un caractère large
+
+%%:
+affiche juste % en sorti.
+
+# :
+Quand il est utilisé avec le format o, x ou X, l’indicateur # utilise 0, 0x ou 0X, respectivement, pour préfixer une valeur de sortie différente de zéro.
+Quand il est utilisé avec le format e, E, f, F, a ou A, l’indicateur # impose à la valeur de sortie de contenir une virgule décimale.
+Quand il est utilisé avec le format g ou G, l’indicateur # force la valeur de sortie à contenir une virgule décimale et empêche la troncature des zéros de fin. Ignoré s’il est utilisé avec c, d, i, u ou s.
+
+0 :
+Si width est préfixé par 0, des zéros non significatifs sont ajoutés jusqu’à ce que la largeur minimale soit atteinte. Si 0 et - apparaissent, le 0 est ignoré. Si 0 est spécifié pour un format entier (i, u, x, X, o, d) et qu’une spécification de précision est également présente (par exemple, %04.d), le 0 est ignoré. Si 0 est spécifié pour le format à virgule flottante a ou A, des zéros non significatifs sont ajoutés en préfixe à la mantisse, après le préfixe 0x ou 0X.
+
+
+- (puis un chiffre):
+Aligner à gauche le résultat selon la largeur de champ donnée. ajoute des espace sur la droite du resultat
+
++ :
+Utilisez un signe (+ ou -) pour préfixer la valeur de sortie s’il s’agit d’un type signé. affiche le signe du nombre
+
+Hh :
+Pour specifier « char , unsigned char » avec le specificateur de type « d, i o, u, x ou X » .
+
+h :
+Pour specifier « short int, short unsigned int » avec le specificateur de type « d,i,o,u,x ou X » .
+
+l :
+Pour specifier « long double, long int, long unsigned int » avec le specificateur de type « a,A,e, E,f,F,g ou G, d,i,o,u,x ou X» .
+
+ll :
+Pour specifier « long long int, unsigned long long int » avec le specificateur de type « d,i,o,u,x ou X » .
+
+j : ex : %jd
+Pour specifier « intmax_t, uintmax_t » avec le specificateur de type « d,i,o,u,x ou X » .
+
+z :
+Pour specifier « size_t » avec le specificateur de type « d,i,o,u,x ou X » .
+
+
+%10 = dois y avoir 10 espace meme sans lettre de conversion et gerer aussi le - pour decaler a gauche
