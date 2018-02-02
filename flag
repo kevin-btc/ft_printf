@@ -78,3 +78,6 @@ Pour specifier « size_t » avec le specificateur de type « d,i,o,u,x ou X �
 
 
 %10 = dois y avoir 10 espace meme sans lettre de conversion et gerer aussi le - pour decaler a gauche
+>>>coucou %-9     <<< ==> >>>coucou <        <<
+"%5" affiche rien si rien n'est ecrit derriere
+
