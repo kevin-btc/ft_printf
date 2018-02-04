@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "ft_printf.h"
+#include "srcs/ft_printf.h"
 #include <locale.h>
 
 

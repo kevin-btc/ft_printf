@@ -5,82 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/02 11:46:24 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/02 17:19:32 by kgricour         ###   ########.fr       */
+/*   Created: 2018/01/04 18:36:40 by kgricour          #+#    #+#             */
+/*   Updated: 2018/02/01 16:13:34 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
+#include <stdio.h>
 
-typedef struct    s_str
-{
-	char    *str;
-	char    *begin_new_str;
-	char    *end_new_str;
-	char    *add_param_str;
-
-}                t_str;
-
-char    *ft_count_caract(char *opt, int nbr_letters_add)
-{
-	int        i;
-	char    *space;
-	int        nbr;
-	char    c;
-
-	i = 0;
-	c = '0';
-	while (opt[i])
-	{
-		if (ft_isdigit(opt[i]))
-		{
-			if ((nbr = ft_atoi(&opt[i]) - nbr_letters_add) < 1)
-				return (NULL);
-			space = ft_strnew(nbr);
-			if (ft_strchr(opt, '-') != NULL || (nbr > 0 && opt[i] != '0'))
-				c = ' ';
-			ft_memset(space, c, nbr);
-			return (space);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-void    ft_add_space(char **tmp2, char *opt)
-{
-	char *str_added;
-//	printf("opt = %s\n",opt);
-	str_added = ft_count_caract(opt, ft_strlen(*tmp2));
-//	printf("str_added = %s\n", str_added);
-	if (str_added != NULL)
-	{
-		if (ft_strchr(opt, '-'))
-		{
-			*tmp2 = ft_strjoin(*tmp2, str_added);
-	//	printf("1 - *tmp2 = %s\n", *tmp2);
-		}
-		else
-			*tmp2 = ft_strjoin(str_added, *tmp2);
-	}
-}
-
-void    ft_printf_ss(char **new_str, int i, va_list vl, char *opt)
+void	ft_printf_ss(char **new_str, int i, va_list vl, char *opt)
 {
 	char *tmp;
 
-	opt = NULL; //a suppr
+	opt = opt-1; //a suppr
 	tmp = *new_str;
 	*new_str = ft_strjoin(ft_strsub(*new_str, 0, i), va_arg(vl, char *));
 	ft_strdel(&tmp);
 }
 
-int        ft_printf_p(char **new_str, int i, va_list vl, char *opt)
+int		ft_printf_p(char **new_str, int i, va_list vl, char *opt)
 {
 	char *tmp;
 	char *res;
 
-	opt = NULL;//a suppr
+	opt = opt -1;//a suppr
 	tmp = *new_str;
 	res = va_arg(vl, char *);
 	*new_str = ft_strjoin(ft_strsub(*new_str, 0, i), ft_putadr(res));
@@ -88,12 +36,12 @@ int        ft_printf_p(char **new_str, int i, va_list vl, char *opt)
 	return (ft_strlen(ft_putadr(res)));
 }
 
-int        ft_printf_c(char **new_str, int i, va_list vl, char *opt)
+int		ft_printf_c(char **new_str, int i, va_list vl, char *opt)
 {
 	char *tmp;
 	char *c_to_s;
 
-	opt = NULL;//a suppr
+	opt = opt -1;//a suppr
 	c_to_s = ft_strnew(1);
 	tmp = *new_str;
 	c_to_s[0] = va_arg(vl, int);
@@ -103,86 +51,58 @@ int        ft_printf_c(char **new_str, int i, va_list vl, char *opt)
 	return (ft_strlen(c_to_s));
 }
 
-int        ft_printf_pct(char **new_str, char *opt, int i)
+char	*ft_get_opt(char *s)
 {
-	char    *tmp2;
-	tmp2 = ft_strnew(0);
-	if (ft_strchr(opt, '-') == NULL && new_str[0][i + 1] != '%')
+	char	*opt;
+	int		i;
+	int		k;
+
+	i = 0;
+	k = 0;
+	while (s[i] != 's' && s[i] != 'c' &&/*s[i] != 'S' &&*/ s[i] != 'p' && s[i] != 'd' &&
+		/*s[i] != 'D' &&*/ s[i] != 'i' &&/* s[i] != 'o' && s[i] != 'u' &&
+		s[i] != 'x' && s[i] != 'X' && s[i] != 'C' &&*/
+		s[i] != '%' && s[i] != '\0')
+	i++;
+	i++;
+	opt = ft_strnew(i);
+	while (k <= i)
 	{
-		ft_add_space(&tmp2, opt);
-		tmp2 = ft_strjoin(tmp2, "%");
-		tmp2 = ft_strjoin(ft_strsub(*new_str, 0 , i),ft_strdup(tmp2 + 1));
+		opt[k] = s[k];
+		k++;
 	}
-	else if (ft_strchr(opt, '-') != NULL)
-	{
-		ft_add_space(&tmp2, opt);
-		tmp2 = ft_strjoin("%", tmp2 + 1);
-		tmp2 = ft_strjoin(ft_strsub(*new_str, 0 , i),ft_strdup(tmp2));
-	}
-	else
-	{
-		tmp2 = ft_strdup("%");
-		tmp2 = ft_strjoin(ft_strsub(*new_str, 0 , i),ft_strdup(tmp2));
-	}
-	*new_str = ft_strdup(tmp2);
-	return (ft_strlen(tmp2));
+	return (opt);
 }
 
-int        ft_printf_id(char **new_str, int i, va_list vl, char *opt)
+int		ft_check_valide_conv(char *s, int *j)
 {
-	char    *tmp;
-	void    *tmp2;
-
-	tmp = *new_str;
-	if (ft_strchr(opt, 'h') && ft_strchr(opt + 1, 'h'))
-		tmp2 = ft_itoa((char)va_arg(vl, int));
-	else if (ft_strchr(opt, 'l') && ft_strchr(opt + 1, 'l'))
-		tmp2 = ft_itoa(va_arg(vl, long long int));
-	else if (ft_strchr(opt, 'h'))
-		tmp2 = ft_itoa((short int)va_arg(vl, int));
-	else if (ft_strchr(opt, 'l'))
-		tmp2 = ft_itoa(va_arg(vl, long int));
-	else if (ft_strchr(opt, 'j'))
-		tmp2 = ft_itoa(va_arg(vl, intmax_t));
-	else if (ft_strchr(opt, 'z'))
-		tmp2 = ft_itoa(va_arg(vl, size_t));
-	else
-		tmp2 = ft_itoa(va_arg(vl, int));
-	ft_add_space((char **)&tmp2, opt);
-	*new_str = ft_strjoin(ft_strsub(*new_str, 0, i), tmp2);
-	ft_strdel(&tmp);
-	return (ft_strlen(tmp2));
+	while (s[*j])
+	{
+		if (s[*j] == 's' || s[*j] == 'c' ||/* s[*j] == 'S' ||*/ s[*j] == 'p' || s[*j] == 'd' ||
+			/*s[*j] == 'D' ||*/ s[*j] == 'i' ||/* s[*j] == 'o' || s[*j] == 'u' ||
+			s[*j] == 'x' || s[*j] == 'X' || s[*j] == 'C' ||*/
+			s[*j] == '%')
+			return (1);
+		else if (s[*j] == '#' || s[*j] == '-' || s[*j] == '+' || ft_isdigit(s[*j]) ||
+			s[*j] == 'j' || s[*j] == 'z' || s[*j] == ' ' || s[*j] == 'h' ||
+			s[*j] == 'l'/* || s[*j] == '.'*/)
+			*j += 1;
+		else
+		{
+			*j -= 1;
+			return (0);
+		}
+	}
+	return (0);
 }
 
-int        ft_printf_ld(char **new_str, int i, va_list vl, char *opt)
+char	*ft_find_conv(char *new_str, int *i, int j, va_list vl)
 {
-	char    *tmp;
-	void    *tmp2;
-
-	tmp = *new_str;
-	if (ft_strchr(opt, 'l') && ft_strchr(opt + 1, 'l'))
-		tmp2 = ft_itoa(va_arg(vl, unsigned long long int));
-	else if (ft_strchr(opt, 'l'))
-		tmp2 = ft_itoa(va_arg(vl, unsigned long int));
-	else if (ft_strchr(opt, 'j'))
-		tmp2 = ft_itoa(va_arg(vl, intmax_t));
-	else if (ft_strchr(opt, 'z'))
-		tmp2 = ft_itoa(va_arg(vl, size_t));
-	else
-		tmp2 = ft_itoa(va_arg(vl, unsigned long int));
-	ft_add_space((char **)&tmp2, opt);
-	*new_str = ft_strjoin(ft_strsub(*new_str, 0, i), tmp2);
-	ft_strdel(&tmp);
-	return (ft_strlen(tmp2));
-}
-
-char    *ft_find_conv(char *new_str, int *i, int j, va_list vl)
-{
-	char    *opt;
-	char    *tmp;
+	char	*opt;
+	char	*tmp;
 
 	tmp = ft_strnew(0);
-	opt = ft_get_opt(new_str + *i + 1);
+	opt = ft_get_opt(new_str + *i);
 	if (new_str[*i + j + 1] == '%')
 		*i += ft_printf_pct(&new_str, opt, *i);
 	else if (new_str[*i + j + 1] == 's')
@@ -199,13 +119,13 @@ char    *ft_find_conv(char *new_str, int *i, int j, va_list vl)
 	return (new_str);
 }
 
-int        ft_printf(const char *format, ...)
+int		ft_printf(const char *format, ...)
 {
-	va_list    vl;
-	int        i;
-	int        j;
-	char    *new_str;
-	char    *tmp;
+	va_list	vl;
+	int		i;
+	int		j;
+	char	*new_str;
+	char	*tmp;
 
 	new_str = ft_strdup(format);
 	tmp = ft_strnew(0);
@@ -224,7 +144,7 @@ int        ft_printf(const char *format, ...)
 			}
 			else if (ft_check_valide_conv(&new_str[i + j + 1], &j) == 0)
 			{
-				tmp = ft_strsub(new_str, i + j + 2, ft_strlen(new_str));
+				tmp = ft_strsub(new_str, i + j + 1, ft_strlen(new_str));
 				new_str = ft_strjoin(ft_strsub(new_str, 0, i), tmp);
 				i--;
 			}
@@ -237,4 +157,3 @@ int        ft_printf(const char *format, ...)
 	ft_strdel(&tmp);
 	return (ft_strlen(new_str));
 }
-

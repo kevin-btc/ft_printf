@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdarg.h>
 
 int	ft_printf_s(char **new_str, int i, va_list vl, char *opt)
 {
