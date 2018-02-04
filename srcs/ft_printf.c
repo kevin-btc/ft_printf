@@ -82,11 +82,17 @@ int		ft_check_valide_conv(char *s, int *j)
 			/*s[*j] == 'D' ||*/ s[*j] == 'i' ||/* s[*j] == 'o' || s[*j] == 'u' ||
 			s[*j] == 'x' || s[*j] == 'X' || s[*j] == 'C' ||*/
 			s[*j] == '%')
+		{
+			printf("--->%s\n", s);
 			return (1);
+		}
 		else if (s[*j] == '#' || s[*j] == '-' || s[*j] == '+' || ft_isdigit(s[*j]) ||
 			s[*j] == 'j' || s[*j] == 'z' || s[*j] == ' ' || s[*j] == 'h' ||
 			s[*j] == 'l'/* || s[*j] == '.'*/)
+		{
+			printf("la--->%s -->%c\n", s, s[*j]);
 			*j += 1;
+		}
 		else
 		{
 			*j -= 1;
@@ -104,7 +110,11 @@ char	*ft_find_conv(char *new_str, int *i, int j, va_list vl)
 	tmp = ft_strnew(0);
 	opt = ft_get_opt(new_str + *i);
 	if (new_str[*i + j + 1] == '%')
+	{
+		printf("1 i = %d - j = %d\n", *i , j);
 		*i += ft_printf_pct(&new_str, opt, *i);
+		printf("2 i = %d - j = %d\n", *i , j);
+	}
 	else if (new_str[*i + j + 1] == 's')
 		*i += ft_printf_s(&new_str, *i, vl, opt);
 	else if (new_str[*i + j + 1] == 'p')
