@@ -12,6 +12,16 @@
 
 #include "libft.h"
 
+char	*ft_cut_hex(char *res)
+{
+	int i;
+
+	i = 0;
+	while (res[i] == '0' && res[i])
+		i++;
+	return (res + i);
+}
+
 char	*ft_putadr(void const *p)
 {
 	char	*base;
@@ -33,7 +43,7 @@ char	*ft_putadr(void const *p)
 	if (ft_strcmp(res, "000000000000") == 0)
 		res = ft_strjoin("0x", "0");
 	else
-		res = ft_strjoin("0x", res);
+		res = ft_strjoin("0x", ft_cut_hex(res));
 	ft_strdel(&tmp);
 	return (res);
 }
