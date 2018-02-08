@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 18:36:40 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/01 16:13:34 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/08 12:29:32 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ void	ft_printf_ss(char **new_str, int i, va_list vl, char *opt)
 int		ft_printf_p(char **new_str, int i, va_list vl, char *opt)
 {
 	char *tmp;
-	char *res;
+	unsigned long long res;
 
-	opt = opt -1;//a suppr
+	opt = opt -1;
 	tmp = *new_str;
-	res = va_arg(vl, char *);
-	*new_str = ft_strjoin(ft_strsub(*new_str, 0, i), ft_putadr(res));
+	res = (unsigned long long)va_arg(vl, char *);
+	*new_str = ft_strjoin(ft_strsub(*new_str, 0, i), ft_putadr(res, "#"));
 	ft_strdel(&tmp);
-	return (ft_strlen(ft_putadr(res)));
+	return (ft_strlen(ft_putadr(res, "#")));
 }
 
 int		ft_printf_c(char **new_str, int i, va_list vl, char *opt)
@@ -57,20 +57,21 @@ char	*ft_get_opt(char *s)
 	int		i;
 	int		k;
 
-	i = 0;
-	k = 0;
+	i = 1;
+	k = 1;
 	while (s[i] != 's' && s[i] != 'c' &&/*s[i] != 'S' &&*/ s[i] != 'p' && s[i] != 'd' &&
 		/*s[i] != 'D' &&*/ s[i] != 'i' &&/* s[i] != 'o' && s[i] != 'u' &&
 		s[i] != 'x' && s[i] != 'X' && s[i] != 'C' &&*/
 		s[i] != '%' && s[i] != '\0')
-	i++;
+		i++;
 	i++;
 	opt = ft_strnew(i);
-	while (k <= i)
+	while (k < i)
 	{
-		opt[k] = s[k];
+		opt[k-1] = s[k];
 		k++;
 	}
+	
 	return (opt);
 }
 
@@ -80,12 +81,12 @@ int		ft_check_valide_conv(char *s, int *j)
 	{
 		if (s[*j] == 's' || s[*j] == 'c' ||/* s[*j] == 'S' ||*/ s[*j] == 'p' || s[*j] == 'd' ||
 			/*s[*j] == 'D' ||*/ s[*j] == 'i' ||/* s[*j] == 'o' || s[*j] == 'u' ||
-			s[*j] == 'x' || s[*j] == 'X' || s[*j] == 'C' ||*/
+			*/s[*j] == 'X' || s[*j] == 'x' ||/* s[*j] == 'C' ||*/
 			s[*j] == '%')
 			return (1);
 		else if (s[*j] == '#' || s[*j] == '-' || s[*j] == '+' || ft_isdigit(s[*j]) ||
 			s[*j] == 'j' || s[*j] == 'z' || s[*j] == ' ' || s[*j] == 'h' ||
-			s[*j] == 'l'/* || s[*j] == '.'*/)
+			s[*j] == 'l' || s[*j] == '.')
 			*j += 1;
 		else
 		{
@@ -115,6 +116,10 @@ char	*ft_find_conv(char *new_str, int *i, int j, va_list vl)
 		*i += ft_printf_id(&new_str, *i, vl, opt);
 	else if (new_str[*i + j + 1] == 'D')
 		*i += ft_printf_ld(&new_str, *i, vl, opt);
+	else if (new_str[*i + j + 1] == 'x')
+		*i += ft_printf_x(&new_str, *i, vl, opt);
+	else if (new_str[*i + j + 1] == 'X')
+		*i += ft_printf_xx(&new_str, *i, vl, opt);
 	ft_strdel(&tmp);
 	return (new_str);
 }
@@ -140,7 +145,7 @@ int		ft_printf(const char *format, ...)
 			{
 				tmp = ft_strsub(new_str, i + j + 2, ft_strlen(new_str));
 				new_str = ft_strjoin(ft_find_conv(new_str, &i, j, vl), tmp);
-				i--;
+			i--;
 			}
 			else if (ft_check_valide_conv(&new_str[i + j + 1], &j) == 0)
 			{

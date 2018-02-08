@@ -6,27 +6,27 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 18:45:20 by kgricour          #+#    #+#             */
-/*   Updated: 2018/01/14 17:09:42 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/07 14:09:50 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_formitoc(char *dest, long long *n, long long *len)
+static void		ft_formitoc(char *dest, long int *n, long int *len)
 {
 	dest[*len] = (*n % 10) + 48;
 	*n /= 10;
 }
 
-static long long	ft_nbrlenj(long long *n, long long *neg, long long *j)
+static long int	ft_nbrlenj(long int *n, long int *neg, long int *j)
 {
-	long long	i;
-	long long	tmp;
+	long int	i;
+	long int	tmp;
 
 	i = 0;
 	*j = 0;
 	tmp = *n;
-	if (*n < (long long)0)
+	if (*n < (long int)0)
 	{
 		*n = *n * -1;
 		*neg = *neg * -1;
@@ -36,7 +36,7 @@ static long long	ft_nbrlenj(long long *n, long long *neg, long long *j)
 		tmp /= 10;
 		i++;
 	}
-	if (*neg == (long long)-1)
+	if (*neg == (long int)-1)
 	{
 		*j = *j + 1;
 		return (i + 1);
@@ -44,13 +44,23 @@ static long long	ft_nbrlenj(long long *n, long long *neg, long long *j)
 	return (i);
 }
 
-char		*ft_itoa(long long n)
+static	int		ft_check_long_min(long int *n, long int *neg)
 {
-	long long	i;
-	long long	j;
-	long long	neg;
-	long long	nbr;
-	char			*str;
+	if (*n == (long int)-9223372036854775808U)
+	{
+		*n = 9223372036854775807;
+		*neg = 2;
+	}
+	return (*n);
+}
+
+char			*ft_itoa(long int n)
+{
+	long int	i;
+	long int	j;
+	long int	neg;
+	long int	nbr;
+	char		*str;
 
 	neg = 1;
 	j = 0;
@@ -58,8 +68,9 @@ char		*ft_itoa(long long n)
 	i = ft_nbrlenj(&nbr, &neg, &j);
 	if (!(str = ft_memalloc(i)))
 		return (NULL);
-	if (neg == (long long)-1)
+	if (neg == (long int)-1 || neg == (long int)2)
 		str[0] = '-';
+	ft_check_long_min(&nbr, &neg);
 	if (nbr == 0)
 	{
 		str[0] = '0';
@@ -68,5 +79,6 @@ char		*ft_itoa(long long n)
 	str[i] = '\0';
 	while (nbr && i-- > j)
 		ft_formitoc(str, &nbr, &i);
+	(neg == 2) ? str[19] = '8' : neg;
 	return (str);
 }

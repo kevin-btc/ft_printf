@@ -9,16 +9,22 @@ char    *ft_count_caract(char *opt, int nbr_letters_add)
 	char    c;
 
 	i = 0;
-	c = '0';
+	c = ' ';
 	while (opt[i])
 	{
-		if (ft_isdigit(opt[i]))
+		if (ft_strchr(opt, '-') == NULL && opt[i] == '0')
+		{
+			c = '0';
+		}
+		if (ft_isdigit(opt[i]) && opt[i] != '0')
 		{
 			if ((nbr = ft_atoi(&opt[i]) - nbr_letters_add) < 1)
 				return (NULL);
+			if (ft_strchr(opt, '+') != NULL && ft_strchr(opt, '-') != NULL && opt[0] == '0')
+				nbr--;
+			else if (ft_strchr(opt, '+') != NULL && opt[0] == '0')
+				nbr--;
 			space = ft_strnew(nbr);
-			if (ft_strchr(opt, '-') != NULL || (nbr > 0 && opt[i] != '0'))
-				c = ' ';
 			ft_memset(space, c, nbr);
 			return (space);
 		}
@@ -41,4 +47,14 @@ void    ft_add_space(char **tmp2, char *opt)
 			*tmp2 = ft_strjoin(str_added, *tmp2);
 	}
 }
-
+/*
+void	ft_add_plus(char *opt, char **tmp2)
+{
+	if (*tmp2[0] != '-' && ft_strchr(opt, '+') != NULL)
+	{
+		ft_add_space((char **)&(*tmp2), opt);
+		*tmp2 = ft_strjoin("+", *tmp2);
+	}
+	else
+		ft_add_space((char **)&(*tmp2), opt);
+}*/
