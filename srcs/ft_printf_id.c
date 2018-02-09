@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 15:33:36 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/07 19:13:02 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/08 16:55:59 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ int        ft_printf_id(char **new_str, int i, va_list vl, char *opt)
 {
 	char    *tmp;
 	char    *tmp2;
+	char	*adr;
 
 	tmp = *new_str;
-	if (ft_strchr(opt, 'h') && ft_strchr(opt + 1, 'h'))
+	if ((adr = ft_strchr(opt, 'h')) && ft_strchr(adr + 1, 'h'))
 		tmp2 = ft_itoa((char)va_arg(vl, int));
-	else if (ft_strchr(opt, 'l') && ft_strchr(opt + 1, 'l'))
+	else if ((adr = ft_strchr(opt, 'l')) && ft_strchr(adr + 1, 'l'))
 		tmp2 = ft_itoa(va_arg(vl, long long int));
 	else if (ft_strchr(opt, 'h'))
 		tmp2 = ft_itoa((short int)va_arg(vl, int));

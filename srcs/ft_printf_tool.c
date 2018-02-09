@@ -24,6 +24,8 @@ char    *ft_count_caract(char *opt, int nbr_letters_add)
 				nbr--;
 			else if (ft_strchr(opt, '+') != NULL && opt[0] == '0')
 				nbr--;
+			else if (ft_strchr(opt, 'p'))
+			   nbr -= 2;	
 			space = ft_strnew(nbr);
 			ft_memset(space, c, nbr);
 			return (space);

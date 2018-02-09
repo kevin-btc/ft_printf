@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 18:36:40 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/08 12:29:32 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/08 17:39:05 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int		ft_printf_p(char **new_str, int i, va_list vl, char *opt)
 	opt = opt -1;
 	tmp = *new_str;
 	res = (unsigned long long)va_arg(vl, char *);
-	*new_str = ft_strjoin(ft_strsub(*new_str, 0, i), ft_putadr(res, "#"));
+	*new_str = ft_strjoin(ft_strsub(*new_str, 0, i), ft_putadr(res, "p", 11));
 	ft_strdel(&tmp);
-	return (ft_strlen(ft_putadr(res, "#")));
+	return (ft_strlen(ft_putadr(res, "p", 11)));
 }
 
 int		ft_printf_c(char **new_str, int i, va_list vl, char *opt)
@@ -60,8 +60,8 @@ char	*ft_get_opt(char *s)
 	i = 1;
 	k = 1;
 	while (s[i] != 's' && s[i] != 'c' &&/*s[i] != 'S' &&*/ s[i] != 'p' && s[i] != 'd' &&
-		/*s[i] != 'D' &&*/ s[i] != 'i' &&/* s[i] != 'o' && s[i] != 'u' &&
-		s[i] != 'x' && s[i] != 'X' && s[i] != 'C' &&*/
+		/*s[i] != 'D' &&*/ s[i] != 'i' &&/* s[i] != 'o' && s[i] != 'u' &&*/
+		s[i] != 'x' && s[i] != 'X' &&/* s[i] != 'C' &&*/
 		s[i] != '%' && s[i] != '\0')
 		i++;
 	i++;
