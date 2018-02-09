@@ -6,7 +6,7 @@
 /*   By: kgricour <kgricour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 16:35:58 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/08 12:57:14 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/08 18:18:14 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,19 @@
 
 int main(void)
 {
+	int i = 3;
 //	ft_printf("%#.x %#.0x", 0, 0);
-	ft_printf("ft hexa = %#hhX\n",  ULLONG_MAX);
-	   printf("pr hexa = %#hhX\n", ULLONG_MAX);
-	ft_printf("ft hexa = %#10x\n", 0);
-	   printf("pr hexa = %#10x\n", 0);
-	printf("%ld\n", -100);
-	ft_printf("%ld\n", -100);
-	ft_printf("ft %+05d\n", 7);
-	   printf("pr %+05d\n", 7);
+//	ft_printf("ft hexa = %#X\n", 0);// ULLONG_MAX);
+//	   printf("pr hexa = %#X\n", 0);// ULLONG_MAX);
+//	ft_printf("ft hexa = %#llx\n", 0);
+//	   printf("pr hexa = %#llx\n", 0);
+	ft_printf("ft hexa = %x\n", -999999999);
+	   printf("pr hexa = %x\n", -999999999);
+	
+//	printf("%ld\n", -100);
+//	ft_printf("%ld\n", -100);
+//	ft_printf("ft %+05d\n", 7);
+//	   printf("pr %+05d\n", 7);
 /*	ft_printf("\n");
 	ft_printf("ft--->%% %5% %%%");
 	ft_printf("\n");
