@@ -6,7 +6,7 @@
 #    By: kgricour <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/09 16:06:47 by kgricour          #+#    #+#              #
-#    Updated: 2018/02/07 18:54:36 by kgricour         ###   ########.fr        #
+#    Updated: 2018/02/14 15:31:35 by kgricour         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRC =   ft_strclr.c ft_strlen.c ft_strnew.c ft_putchar.c ft_putstr.c \
 		ft_isdigit.c ft_strsub.c ft_strjoin.c ft_itoa.c ft_putnbr.c \
 		ft_putchar_fd.c ft_putstr_fd.c ft_putnbr_fd.c ft_nbrlen.c \
 		ft_bzero.c ft_strcmp.c ft_freejoin.c ft_putadr.c ft_printf.c \
-		ft_conv.c ft_printf_s.c ft_printf_id.c ft_printf_ld.c ft_printf_pct.c ft_printf_tool.c ft_printf_x.c ft_printf_xx.c
+		ft_printf_s.c ft_printf_id.c ft_printf_ld.c ft_printf_pct.c ft_printf_tool.c ft_printf_x.c ft_putwchar.c ft_putwstr.c
 
 OBJ = $(SRC:.c=.o)
 

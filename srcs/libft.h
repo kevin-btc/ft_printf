@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 14:46:50 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/08 18:08:51 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/13 18:09:36 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,9 @@ void			ft_lstadd(t_list **alst, t_list *new);
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int				ft_isblank(int c);
-char			*ft_putadr(unsigned long long p, char *opt, int nbr);
+char			*ft_putadr(unsigned long long p, char *opt, int base);
 void			ft_wputstr(const wchar_t *str);
+char			*ft_freejoin(char *s1, char *s2, int n);
 //int				ft_printf(const char *format);
 
 #endif
