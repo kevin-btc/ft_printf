@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 20:35:13 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/14 19:13:44 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/15 00:07:30 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ void	ft_precision(char **str, char *opt)
 		nbr = ft_atoi(adr + 1) - ft_strlen(*str);
 	else if (opt[i] == '0' && !ft_isdigit(opt[i - 1]))
 		nbr = ft_atoi(opt + i + 1) - ft_strlen(*str);
-	if (ft_strchr(opt, '+') && (ft_strchr(opt, '0')) /*&& !ft_isdigit(*bef_adr - 1)*/)
-		nbr--;
 	if (ft_strchr(opt, '#') && (ft_strchr(opt, 'x') || ft_strchr(opt, 'X')))
 		nbr -= 2;
 	if (nbr < 0)
@@ -104,6 +102,12 @@ void	ft_precision(char **str, char *opt)
 		nbr = ft_atoi(opt + i + 1);
 		*str = ft_strsub(*str, 0, nbr);
 		nbr = nbr - ft_strlen(*str);
+	}
+	if ((ft_strchr(opt , 'd') || ft_strchr(opt, 'D')) && ft_strchr(opt, '.') && ft_strchr(*str, '-'))
+	{
+		nbr = ft_atoi(opt + i + 1);
+		*str = ft_strsub(*str, 0, nbr);
+		nbr = nbr - ft_strlen(*str) + 1;
 	}
 	zero = ft_strnew(nbr);
 	ft_memset(zero, '0', nbr);

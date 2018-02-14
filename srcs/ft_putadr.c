@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 19:33:46 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/14 19:22:42 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/14 22:30:07 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ char			*ft_putadr(unsigned long long adr, char *opt, int base)
 	}
 	hex->res = ft_strjoin(tmp, hex->res);
 	if (hex->res[0] == '\0' && !ft_strchr(opt, '.'))
+		hex->res = "0";
+	if (hex->res[0] == '\0' && ft_strchr(opt, '#'))
 		hex->res = "0";
 	if (opt[i] ==  '0' && !ft_isdigit(opt[i - 1]))
 	{

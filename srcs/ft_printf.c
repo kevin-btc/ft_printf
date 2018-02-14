@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 18:36:40 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/14 20:30:58 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/14 23:49:53 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ int		ft_printf_c(char **new_str, int i, va_list vl, char *opt)
 		c_to_s = ft_putwchar((wchar_t)va_arg(vl, int));
 	if (c_to_s[0] == 0)
 	{
-		ft_putchar(0);
+		c_to_s[0] = '\1';
 		len = 1;
 	}
 	else
 		len = ft_strlen(c_to_s);
 	ft_add_space((char **)&c_to_s,opt);
-	*new_str = ft_freejoin(ft_strsub(*new_str, 0, i), c_to_s, 2);
+	*new_str = ft_freejoin(ft_strsub(*new_str, 0, i), c_to_s, 0);
 	return (len);
 }
 
@@ -143,10 +143,19 @@ int		ft_printf(const char *format, ...)
 				i--;
 			}
 		}
-	//	ft_putchar(new_str[i]);
 		i++;
 	}
 	va_end(vl);
-	ft_putstr(new_str);
+	i = 0;
+	while (new_str[i])
+	{
+		if (new_str[i] == '\1')
+		{
+			ft_putchar(0);
+		}
+		else
+			ft_putchar(new_str[i]);
+		i++;
+	}
 	return (ft_strlen(new_str));
 }
