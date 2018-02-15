@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 20:35:13 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/15 00:07:30 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/15 18:46:12 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,13 @@ char    *ft_count_caract(char *opt, int nbr_letters_add)
 	}
 	while (opt[i] && opt[i] != '.')
 	{
-		if (!ft_strchr(opt, '-') && opt[i] == '0')
+		if (!ft_strchr(opt, '-') && opt[i] == '0' && !ft_strchr(opt , '.'))
 			c = '0';	
 		if (ft_isdigit(opt[i]) && opt[i] != '0')
 		{
-			//	printf("opt %d i = %d\n", ft_atoi(&opt[i]), nbr_letters_add);
 			if ((nbr = ft_atoi(&opt[i]) - nbr_letters_add) < 1)
-			{
 				return (NULL);
-			}
-			if (ft_strchr(opt, '+') && opt[0] == '0')
-				nbr--;
-			else if (ft_strchr(opt, 'p') && nbr > 2)
+			if (ft_strchr(opt, 'p') && nbr > 2)
 				nbr -= 2;
 			else if (ft_check_valide_conv(opt, &i) == 0)
 				nbr++;
@@ -69,9 +64,9 @@ void    ft_add_space(char **tmp2, char *opt)
 	if (str_added != NULL)
 	{
 		if (ft_strchr(opt, '-'))
-			*tmp2 = ft_strjoin(*tmp2, str_added);
+			*tmp2 = ft_freejoin(*tmp2, str_added, 1);
 		else
-			*tmp2 = ft_strjoin(str_added, *tmp2);
+			*tmp2 = ft_freejoin(str_added, *tmp2, 0);
 	}
 }
 
@@ -84,7 +79,7 @@ void	ft_precision(char **str, char *opt)
 
 	nbr = 0;
 	i = 0;
-	while (opt[i] != '0' && opt[i] != '\0')
+	if (opt[0] == '0' || opt[1] == '0')
 		i++;
 	if ((adr = ft_strchr(opt, '.')))
 		nbr = ft_atoi(adr + 1) - ft_strlen(*str);
@@ -95,7 +90,7 @@ void	ft_precision(char **str, char *opt)
 	if (nbr < 0)
 		nbr = 0;
 	i = 0;
-	while (opt[i] != '.' && opt[i] != '\0')
+	while (opt[i] != '.' && opt[i] != '+' && opt[i] != '\0')
 		i++;
 	if (ft_strchr(opt , 's') || ft_strchr(opt, 'S'))
 	{
@@ -103,11 +98,17 @@ void	ft_precision(char **str, char *opt)
 		*str = ft_strsub(*str, 0, nbr);
 		nbr = nbr - ft_strlen(*str);
 	}
-	if ((ft_strchr(opt , 'd') || ft_strchr(opt, 'D')) && ft_strchr(opt, '.') && ft_strchr(*str, '-'))
+	if (ft_strchrstr("dD", opt, '|') && ft_strchr(opt, '.') && ft_strchr(*str, '-'))
 	{
 		nbr = ft_atoi(opt + i + 1);
 		*str = ft_strsub(*str, 0, nbr);
 		nbr = nbr - ft_strlen(*str) + 1;
+	}
+	if (opt[0] == '0' && ft_strchrstr("d+", opt, '&') && !ft_strchr(*str, '-'))
+	{
+		nbr = ft_atoi(opt + i + 1);
+		*str = ft_strsub(*str, 0, nbr);
+		nbr = nbr - ft_strlen(*str) - 1;
 	}
 	zero = ft_strnew(nbr);
 	ft_memset(zero, '0', nbr);
@@ -120,17 +121,20 @@ void	ft_precision(char **str, char *opt)
 
 void	ft_add_plus(char *opt, char **tmp2)
 {
-
 	if (!ft_strchr(opt, '-'))
 		ft_precision((char **)tmp2, opt);
 	if (opt[0] == '0' && ft_strchr(opt, '+') && !ft_strchr(*tmp2, '-'))
 	{
 		ft_precision((char **)tmp2, opt);
-		*tmp2 = ft_strjoin("+", *tmp2);
+		*tmp2 = ft_freejoin("+", *tmp2, 1);
 	}
 	else if (*tmp2[0] != '-' && ft_strchr(opt, '+'))
 	{
-		*tmp2 = ft_strjoin("+", *tmp2);
+		ft_precision((char **)tmp2, opt);
+		*tmp2 = ft_freejoin("+", *tmp2, 1);
+	}
+	else if (ft_strchr(opt, '-') && ft_strchr(opt, '.'))
+	{
 		ft_precision((char **)tmp2, opt);
 	}
 }

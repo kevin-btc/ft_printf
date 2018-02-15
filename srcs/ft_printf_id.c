@@ -6,13 +6,13 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 15:33:36 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/14 23:58:01 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/15 18:22:29 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_check_neg(char **tmp2)
+void	ft_check_sign(char **tmp2, char c)
 {
 	int i;
 	char tmp;
@@ -20,8 +20,7 @@ void	ft_check_neg(char **tmp2)
 	i = 0;
 	while (tmp2[0][i])
 	{
-	//	printf("i = %d, %s\n", i, tmp2[0]);
-		if (tmp2[0][i] == '-')
+		if (tmp2[0][i] == c)
 		{
 			tmp = tmp2[0][i];
 			tmp2[0][i] = tmp2[0][0];
@@ -53,16 +52,14 @@ int        ft_printf_id(char **new_str, int i, va_list vl, char *opt)
 		tmp2 = ft_itoa(va_arg(vl, size_t));
 	else
 		tmp2 = ft_itoa(va_arg(vl, int));
-	if (tmp2[0] == '0' && tmp2[1] == '\0' && ft_strchr(opt, '.'))
+	if ((adr = ft_strchr(opt, '.')) && (*(adr + 1) == '0' || ft_isalpha(*(adr + 1))) && tmp2[0] == '0')
 		tmp2[0] = '\0';
-//	printf("1 %s\n", tmp2);
 	ft_add_plus(opt, &tmp2);
-//	printf("2 %s\n", tmp2);
 	ft_add_space((char **)&tmp2, opt);
-//	printf("3 %s\n", tmp2);
 	if (ft_strchr(tmp2, '-') && ft_strchr(tmp2, '0'))
-		ft_check_neg(&tmp2);
-//	printf("4 %s\n", tmp2);
+		ft_check_sign(&tmp2, '-');
+	if (ft_strchr(tmp2, '+') && tmp2[0] == '0')
+		ft_check_sign(&tmp2, '+');
 	*new_str = ft_strjoin(ft_strsub(*new_str, 0, i), tmp2);
 	ft_strdel(&tmp);
 

@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 14:46:50 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/13 18:09:36 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/15 18:11:47 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int				ft_isblank(int c);
 char			*ft_putadr(unsigned long long p, char *opt, int base);
 void			ft_wputstr(const wchar_t *str);
 char			*ft_freejoin(char *s1, char *s2, int n);
-//int				ft_printf(const char *format);
+int         	ft_strchrstr(const char *search, const char *target, char cmp);
 
 #endif
 

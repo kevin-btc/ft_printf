@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 14:22:02 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/14 19:22:56 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/15 18:36:15 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	ft_printf_xobup(char **new_str, int i, va_list vl, char *opt)
 	int		b;
 
 	tmp = *new_str;
+	tmp2 = NULL;
 	b = ft_find_base(opt);
 	if (ft_strchr(opt, 'U') || ft_strchr(opt, 'l'))
 		tmp2 = ft_putadr(va_arg(vl, unsigned long int), opt, b);
@@ -53,7 +54,9 @@ int	ft_printf_xobup(char **new_str, int i, va_list vl, char *opt)
 		tmp2 = ft_putadr(va_arg(vl, size_t), opt, b);
 	else
 		tmp2 = ft_putadr(va_arg(vl, unsigned int), opt, b);
-	*new_str = ft_freejoin(ft_strsub(*new_str, 0, i), tmp2, 0);
+	if ((adr = ft_strchr(opt, '.')) && (*(adr + 1) == '0' || ft_isalpha(*(adr + 1))) && *tmp2 == '0' && ft_strchr(opt, 'x'))
+		tmp2 = ft_strdup("");
+	*new_str = ft_strjoin(ft_strsub(*new_str, 0, i), tmp2);
 	ft_strdel(&tmp);
 	return (ft_strlen(tmp2));
 }

@@ -6,19 +6,12 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 18:36:40 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/14 23:49:53 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/15 10:54:23 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
-
-void	ft_printf_ss(char **new_str, int i, va_list vl, char *opt)
-{
-
-	opt = opt-1; //a suppr
-	*new_str = ft_freejoin(ft_strsub(*new_str, 0, i), va_arg(vl, char *), 2);
-}
 
 int		ft_printf_c(char **new_str, int i, va_list vl, char *opt)
 {
