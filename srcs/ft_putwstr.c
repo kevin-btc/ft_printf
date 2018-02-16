@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 16:22:13 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/12 19:09:48 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/16 22:43:48 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_putwstr(wchar_t *s)
 {
-	char *new_str;
-	char *tmp;
-	const char *tmp2;
+	char		*new_str;
+	char		*tmp;
+	const char	*tmp2;
 
 	new_str = ft_strnew(0);
 	if (s != NULL)

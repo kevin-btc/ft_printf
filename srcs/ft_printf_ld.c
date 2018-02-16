@@ -19,7 +19,7 @@ int        ft_printf_ld(char **new_str, int i, va_list vl, char *opt)
 	else
 		tmp2 = ft_itoa(va_arg(vl, unsigned long int));
 	ft_add_space((char **)&tmp2, opt);
-	*new_str = ft_strjoin(ft_strsub(*new_str, 0, i), tmp2);
+	*new_str = ft_strjoin(ft_strsub(*new_str, 0, i, 0), tmp2);
 	ft_strdel(&tmp);
 	return (ft_strlen(tmp2));
 }

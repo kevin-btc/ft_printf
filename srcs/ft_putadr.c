@@ -6,18 +6,11 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 19:33:46 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/14 22:30:07 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/16 20:17:46 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-typedef struct	s_hex
-{
-	char *base;
-	char *res;
-	char *tmp;
-}				t_hex;
+#include "ft_printf.h"
 
 int		ft_count_nbr(unsigned long long value, int base)
 {
@@ -56,7 +49,7 @@ char			*ft_putadr(unsigned long long adr, char *opt, int base)
 		hex->res[i] = hex->base[adr % base];
 		adr /= (unsigned long long)base;
 	}
-	if (ft_strchr(opt, '.') || (ft_strchr(opt, '#') && ft_strchr(opt,'x') && !ft_strchr(opt, '-')))
+	if (ft_strchr(opt, '.') || (ft_strchrstr("#x", opt, '|') && !ft_strchr(opt, '-')))
 		ft_precision((char **)&hex->res, opt);
 	if (hex->res[0] != '\0')
 	{
