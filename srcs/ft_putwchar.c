@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/17 00:09:42 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/16 18:47:13 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/17 16:38:09 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static char	*ft_putwchar_one(wchar_t str, char *c)
 static char	*ft_putwchar_two(wchar_t str, char *c)
 {
 	c = ft_strnew(3);
-	c[0] = ((str >> 6) & 0b11111) + 0xc0;
-	c[1] = ((str >> 0) & 0b111111) + 0x80;
+	c[0] = ((str >> 6) & 0b11111) | 0xc0;
+	c[1] = (str & 0b111111) | 0x80;
 	c[2] = '\0';
 	return (c);
 }
@@ -32,9 +32,9 @@ static char	*ft_putwchar_two(wchar_t str, char *c)
 static char	*ft_putwchar_three(wchar_t str, char *c)
 {
 	c = ft_strnew(4);
-	c[0] = ((str >> 12) & 0b1111) + 0xe0;
-	c[1] = ((str >> 6) & 0b111111) + 0x80;
-	c[2] = (str & 0b111111) + 0x80;
+	c[0] = ((str >> 12) & 0b1111) | 0xe0;
+	c[1] = ((str >> 6) & 0b111111) | 0x80;
+	c[2] = (str & 0b111111) | 0x80;
 	c[3] = '\0';
 	return (c);
 }
@@ -42,10 +42,10 @@ static char	*ft_putwchar_three(wchar_t str, char *c)
 static char	*ft_putwchar_four(wchar_t str, char *c)
 {
 	c = ft_strnew(5);
-	c[0] = ((str >> 18) & 0b111) + 0xf0;
-	c[1] = ((str >> 12) & 0b111111) + 0x80;
-	c[2] = ((str >> 6) & 0b111111) + 0x80;
-	c[3] = (str & 0b111111) + 0x80;
+	c[0] = ((str >> 18) & 0b111) | 0xf0;
+	c[1] = ((str >> 12) & 0b111111) | 0x80;
+	c[2] = ((str >> 6) & 0b111111) | 0x80;
+	c[3] = (str & 0b111111) | 0x80;
 	c[4] = '\0';
 	return (c);
 }

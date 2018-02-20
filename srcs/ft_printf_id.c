@@ -6,62 +6,73 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 15:33:36 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/17 00:28:47 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/19 19:02:58 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_check_sign(char *tmp2, char c)
+static void	ft_swap_sign(char *tmp2)
 {
-	int i;
-	char tmp;
+	int		i;
 
 	i = 0;
 	while (tmp2[i])
 	{
-		if (tmp2[i] == c)
+		if (tmp2[i] == '-')
 		{
-			tmp = tmp2[i];
-			tmp2[i] = tmp2[0];
-			tmp2[0] = tmp;
-			break;
+			tmp2[0] = '-';
+			tmp2[i] = '0';
+			break ;
 		}
 		i++;
 	}
 }
 
-int        ft_printf_id(char **new_str, int i, va_list vl, char *opt)
+static char	*ft_cast_param_ild(va_list vl, char *opt)
 {
-	char    *tmp;
-	char    *tmp2;
 	char	*adr;
+	char	*tmp2;
 
-	tmp = *new_str;
+	tmp2 = NULL;
 	if (ft_strchrstr("Dl", opt, '|'))
 		tmp2 = ft_itoa(va_arg(vl, long int));
 	else if ((adr = ft_strchr(opt, 'h')) && ft_strchr(adr + 1, 'h'))
 		tmp2 = ft_itoa((char)va_arg(vl, int));
 	else if ((adr = ft_strchr(opt, 'l')) && ft_strchr(adr + 1, 'l'))
 		tmp2 = ft_itoa(va_arg(vl, long long int));
-	else if (ft_strchr(opt, 'h'))
-		tmp2 = ft_itoa((short int)va_arg(vl, int));
-	else if (ft_strchr(opt, 'j'))
-		tmp2 = ft_itoa(va_arg(vl, intmax_t));
 	else if (ft_strchr(opt, 'z'))
 		tmp2 = ft_itoa(va_arg(vl, size_t));
+	else if (ft_strchr(opt, 'j'))
+		tmp2 = ft_itoa(va_arg(vl, intmax_t));
+	else if (ft_strchr(opt, 'h'))
+		tmp2 = ft_itoa((short int)va_arg(vl, int));
 	else
 		tmp2 = ft_itoa(va_arg(vl, int));
-	if ((adr = ft_strchr(opt, '.')) && (*(adr + 1) == '0' || ft_isalpha(*(adr + 1))) && tmp2[0] == '0')
+	return (tmp2);
+}
+
+int			ft_printf_id(char **new_str, int i, va_list vl, char *opt)
+{
+	char	*tmp;
+	char	*tmp2;
+	char	*adr;
+	int		len;
+
+	tmp = *new_str;
+	tmp2 = ft_cast_param_ild(vl, opt);
+	if ((adr = ft_strchr(opt, '.')) && (*(adr + 1) == '0' ||
+		ft_isalpha(*(adr + 1))) && tmp2[0] == '0')
 		tmp2[0] = '\0';
 	ft_add_plus(opt, &tmp2);
 	ft_add_space((char **)&tmp2, opt);
-	if (ft_strchrstr("-0", tmp2, '&'))
-		ft_check_sign(tmp2, '-');
-	if (ft_strchr(tmp2, '+') && tmp2[0] == '0')
-		ft_check_sign(tmp2, '+');
-	*new_str = ft_freejoin(ft_strsub(*new_str, 0, i, 0), tmp2, 0);
+	if (ft_strchr(tmp2, '0') && ft_strchr(tmp2, '-'))
+	{
+		if (!ft_strchrstr("jll", opt, '|'))
+			ft_swap_sign(tmp2);
+	}
+	len = ft_strlen(tmp2);
+	*new_str = ft_freejoin(ft_strsub(*new_str, 0, i, 0), tmp2, 2);
 	ft_strdel(&tmp);
-
-	return (ft_strlen(tmp2));
+	return (len);
 }

@@ -6,15 +6,15 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 14:22:02 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/17 00:23:25 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/19 17:56:51 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_find_base(char *opt)
+static int	ft_find_base(char *opt)
 {
-	int b;
+	int	b;
 
 	b = 0;
 	if (ft_strchr(opt, 'b'))
@@ -28,16 +28,12 @@ int	ft_find_base(char *opt)
 	return (b);
 }
 
-int	ft_printf_xobup(char **new_str, int i, va_list vl, char *opt)
-{	
-	char    *tmp;
-	char    *tmp2;
+static char	*ft_cast_param_xobup(va_list vl, char *opt)
+{
 	char	*adr;
+	char	*tmp2;
 	int		b;
-	int		len;
 
-	tmp = *new_str;
-	tmp2 = NULL;
 	b = ft_find_base(opt);
 	if (ft_strchrstr("UOl", opt, '|'))
 		tmp2 = ft_putadr(va_arg(vl, unsigned long int), opt, b);
@@ -47,16 +43,28 @@ int	ft_printf_xobup(char **new_str, int i, va_list vl, char *opt)
 		tmp2 = ft_putadr((unsigned char)va_arg(vl, unsigned int), opt, b);
 	else if ((adr = ft_strchr(opt, 'l')) && ft_strchr(adr + 1, 'l'))
 		tmp2 = ft_putadr(va_arg(vl, unsigned long long int), opt, b);
-	else if (ft_strchr(opt, 'h'))
-		tmp2 = ft_putadr((unsigned short int)va_arg(vl,unsigned int), opt, b);
-	else if (ft_strchr(opt, 'j'))
-		tmp2 = ft_putadr((unsigned long long)va_arg(vl, intmax_t), opt, b);
 	else if (ft_strchr(opt, 'z'))
 		tmp2 = ft_putadr(va_arg(vl, size_t), opt, b);
+	else if (ft_strchr(opt, 'j'))
+		tmp2 = ft_putadr((unsigned long long)va_arg(vl, intmax_t), opt, b);
+	else if (ft_strchr(opt, 'h'))
+		tmp2 = ft_putadr((unsigned short int)va_arg(vl, unsigned int), opt, b);
 	else
 		tmp2 = ft_putadr(va_arg(vl, unsigned int), opt, b);
-	if ((adr = ft_strchr(opt, '.')) && (*(adr + 1) == '0' || ft_isalpha(*(adr + 1)))
-		 && *tmp2 == '0' && ft_strchr(opt, 'x'))
+	return (tmp2);
+}
+
+int			ft_printf_xobup(char **new_str, int i, va_list vl, char *opt)
+{
+	char	*tmp;
+	char	*tmp2;
+	char	*adr;
+	int		len;
+
+	tmp = *new_str;
+	tmp2 = ft_cast_param_xobup(vl, opt);
+	if ((adr = ft_strchr(opt, '.')) && (*(adr + 1) == '0' ||
+	ft_isalpha(*(adr + 1))) && *tmp2 == '0' && ft_strchr(opt, 'x'))
 		tmp2 = ft_strdup("");
 	len = ft_strlen(tmp2);
 	*new_str = ft_strsub(*new_str, 0, i, 0);

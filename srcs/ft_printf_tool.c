@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 20:35:13 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/16 17:27:27 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/20 15:33:35 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,32 @@ void			ft_add_plus(char *opt, char **tmp2)
 		ft_precision((char **)tmp2, opt);
 	if (ft_strchrstr("0+", opt, '&') && !ft_strchr(*tmp2, '-'))
 	{
-		ft_precision((char **)tmp2, opt);
+		if (ft_strchr(opt, '.'))
+			ft_precision((char **)tmp2, opt);
 		*tmp2 = ft_freejoin("+", *tmp2, 1);
 	}
 	else if (*tmp2[0] != '-' && ft_strchr(opt, '+'))
 	{
-		ft_precision((char **)tmp2, opt);
+		if (ft_strchr(opt, '.'))
+			ft_precision((char **)tmp2, opt);
 		*tmp2 = ft_freejoin("+", *tmp2, 1);
 	}
 	else if (ft_strchrstr("-.", opt, '&'))
-		ft_precision((char **)tmp2, opt);
+	{
+		if (ft_strchr(opt, '.'))
+			ft_precision((char **)tmp2, opt);
+	}
+}
+
+int				ft_print(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		(str[i] == '\1') ? ft_putchar(0) : ft_putchar(str[i]);
+		i++;
+	}
+	return (ft_strlen(str));
 }
