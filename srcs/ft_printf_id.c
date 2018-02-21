@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 15:33:36 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/21 00:52:58 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/21 16:45:05 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 static void	ft_swap_sign(char *tmp2)
 {
 	int		i;
+	char	c;
 
 	i = 0;
+	c = '+';
+	(ft_strchr(tmp2, '-')) ? c = '-' : c;
 	while (tmp2[i])
 	{
-		if (tmp2[i] == '-')
+		if (tmp2[i] == c)
 		{
-			tmp2[0] = '-';
+			tmp2[0] = c;
 			tmp2[i] = '0';
 			break ;
 		}
@@ -71,6 +74,9 @@ int			ft_printf_id(char **new_str, int i, va_list vl, char *opt)
 		if (!ft_strchrstr("jllD", opt, '|'))
 			ft_swap_sign(tmp2);
 	}
+	if (ft_strchr(tmp2, '+') && tmp2[0] == '0')
+			ft_swap_sign(tmp2);
+
 	len = ft_strlen(tmp2);
 	*new_str = ft_freejoin(ft_strsub(*new_str, 0, i, 0), tmp2, 2);
 	ft_strdel(&tmp);

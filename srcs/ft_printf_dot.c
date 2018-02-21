@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 23:41:34 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/21 00:52:53 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/21 15:51:40 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@ static int	ft_edit_nbr_sd(char **str, char *opt, int i, int mode)
 	int		nbr;
 	int		len_str;
 	nbr = ft_atoi(opt + i + 1);
+
 	if (ft_strlen(*str) > (size_t)nbr && ft_strchrstr("dD", opt, '|'))
 		return (0);
 	*str = ft_strsub(*str, 0, nbr, 0);
 	len_str = ft_strlen(*str);
 	if (mode == 1)
 		nbr = nbr - len_str;
-	else if (mode == 3)
-		nbr = nbr - len_str - 1;
 	else if (mode == 2)
 		nbr = nbr - len_str + 1;
+	else if (mode == 3)
+		nbr = nbr - len_str - 1;
 	if (ft_strchrstr("sS", opt, '|'))
 		nbr = 0;
 	return (nbr);
@@ -77,6 +78,4 @@ void		ft_precision(char **str, char *opt)
 	ft_memset(zero, '0', nbr);
 	(**str == '\0') ? zero[0] = '\0' : zero[0];
 	*str = ft_freejoin(zero, *str, 2);
-	if (ft_strchr(opt, ' ') && !ft_strchr(opt, '+') && *str[0] != '-')
-		*str = ft_freejoin(" ", *str, 1);
 }

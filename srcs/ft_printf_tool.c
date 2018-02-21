@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 20:35:13 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/21 00:24:36 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/21 16:46:53 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,21 @@ void			ft_add_space(char **tmp2, char *opt)
 
 void			ft_add_plus(char *opt, char **tmp2)
 {
+	if (ft_strchr(opt, ' ') && !ft_strchr(opt, '+') && *tmp2[0] != '-')
+		if (!ft_strchr(opt, '.'))
+			*tmp2 = ft_freejoin(" ", *tmp2, 3);
 	if (!ft_strchr(opt, '-'))
-		ft_precision((char **)tmp2, opt);
+	{
+			ft_precision((char **)tmp2, opt);
+	}
 	if (ft_strchrstr("0+", opt, '&') && !ft_strchr(*tmp2, '-'))
 	{
 		if (ft_strchr(opt, '.'))
 			ft_precision((char **)tmp2, opt);
-		*tmp2 = ft_freejoin("+", *tmp2, 1);
+		if (*tmp2[0] != '0')
+			*tmp2 = ft_freejoin("+", *tmp2, 1);
+		else
+			*tmp2[0] = '+';
 	}
 	else if (*tmp2[0] != '-' && ft_strchr(opt, '+'))
 	{
