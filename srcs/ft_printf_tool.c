@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 20:35:13 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/20 15:33:35 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/21 00:24:36 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static	void	ft_edit_nbr_carac(char *opt, int *nbr)
 	int i;
 
 	i = 0;
-	if (ft_strchr(opt, 'p') && *nbr > 2)
+	if (ft_strchr(opt, 'p') && !ft_strchr(opt, '-') && *nbr > 2)
 		*nbr -= 2;
-	else if (ft_check_valide_conv(opt, &i) == 0)
+	if (ft_check_valide_conv(opt, &i) == 0)
 		*nbr += 1;
 	else if (ft_strchrstr("x#0", opt, '&') && !ft_strchr(opt, '-') && *nbr > 2)
 		nbr -= 2;
@@ -27,7 +27,7 @@ static	void	ft_edit_nbr_carac(char *opt, int *nbr)
 		*nbr -= 2;
 }
 
-static	char	*ft_count_caract(char *opt, int nbr_letters_add)
+static	char	*ft_insert_caract(char *opt, int nbr_letters_add)
 {
 	int		i;
 	char	*space;
@@ -58,11 +58,10 @@ static	char	*ft_count_caract(char *opt, int nbr_letters_add)
 void			ft_add_space(char **tmp2, char *opt)
 {
 	char *str_added;
-
-	str_added = ft_count_caract(opt, ft_strlen(*tmp2));
+	str_added = ft_insert_caract(opt, ft_strlen(*tmp2));
 	if (str_added != NULL)
 	{
-		if (ft_strchr(opt, '-'))
+		if (ft_strchr(opt, '-') || ft_strchrstr("0p", opt, '&'))
 			*tmp2 = ft_freejoin(*tmp2, str_added, 1);
 		else
 			*tmp2 = ft_freejoin(str_added, *tmp2, 0);

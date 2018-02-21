@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 18:36:40 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/19 17:32:56 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/21 00:12:12 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,9 @@ int		ft_printf(const char *format, ...)
 				tmp = ft_strsub(new_str, i  + j + 1, ft_strlen(new_str ), 0);
 				while (ft_strchrstr("+-#", &new_str[j], '|'))
 					j++;
-				ft_add_space(&new_str, ft_strsub(new_str, i , i + j, 0));
-				new_str = ft_freejoin(ft_strsub(new_str, 0, i-- , 0), tmp, 0);
+				ft_add_space(&tmp, ft_get_opt(new_str + i));
+				new_str = ft_freejoin(ft_strsub(new_str, 0, i, 0), tmp, 0);
+				i--;
 			}
 		}
 		i++;

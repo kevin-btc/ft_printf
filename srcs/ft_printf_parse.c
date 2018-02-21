@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 17:33:45 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/19 13:20:31 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/20 18:46:54 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,18 @@ char	*ft_get_opt(char *s)
 	char		*opt;
 	int			i;
 	int			k;
-	const char	*format;
+	const char *flags;
 
-	format = "scSbpdDioOuUXxC%";
+	flags = "#-+jz hl.";
 	i = 1;
 	k = 1;
-	while (!ft_strchr(format, s[i]) && s[i] != '\0')
-		i++;
+	while (s[i])
+	{
+		if (ft_strchr(flags, s[i]) || ft_isdigit(s[i]))
+			i++;
+		else
+			break ;
+	}
 	i++;
 	opt = ft_strnew(i);
 	while (k < i)

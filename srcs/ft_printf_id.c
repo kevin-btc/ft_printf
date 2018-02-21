@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 15:33:36 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/19 19:02:58 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/21 00:52:58 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int			ft_printf_id(char **new_str, int i, va_list vl, char *opt)
 	ft_add_space((char **)&tmp2, opt);
 	if (ft_strchr(tmp2, '0') && ft_strchr(tmp2, '-'))
 	{
-		if (!ft_strchrstr("jll", opt, '|'))
+		if (!ft_strchrstr("jllD", opt, '|'))
 			ft_swap_sign(tmp2);
 	}
 	len = ft_strlen(tmp2);
