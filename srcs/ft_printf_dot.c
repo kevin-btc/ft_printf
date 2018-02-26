@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 23:41:34 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/21 15:51:40 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/26 17:45:04 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static int	ft_edit_nbr_sd(char **str, char *opt, int i, int mode)
 {
 	int		nbr;
 	int		len_str;
+	
 	nbr = ft_atoi(opt + i + 1);
-
 	if (ft_strlen(*str) > (size_t)nbr && ft_strchrstr("dD", opt, '|'))
 		return (0);
 	*str = ft_strsub(*str, 0, nbr, 0);
@@ -47,7 +47,7 @@ static int	ft_edit_nbr_x(char **str, char *opt)
 		nbr = ft_atoi(adr + 1) - ft_strlen(*str);
 	else if (ft_strchrstr("0", &opt[i], '&'))
 		nbr = ft_atoi(opt + i + 1) - ft_strlen(*str);
-	if (ft_strchr(opt, '#') && ft_strchrstr("xX", opt, '|'))
+	if (ft_strchr(opt, '#') && ft_strchrstr("xX", opt, '|') && !ft_strchr(opt, '.'))
 		nbr -= 2;
 	if (nbr < 0)
 		nbr = 0;
@@ -61,6 +61,7 @@ void		ft_precision(char **str, char *opt)
 	int		i;
 
 	i = 0;
+	zero = NULL;
 	nbr = ft_edit_nbr_x(str, opt);
 	while (opt[i] != '.' && opt[i] != '+' && opt[i] != '\0')
 		i++;
@@ -74,6 +75,8 @@ void		ft_precision(char **str, char *opt)
 	if (ft_strchr(*str, '-'))
 		if (ft_strchrstr("dD", opt, '|') && ft_strchr(opt, '.'))
 			nbr = ft_edit_nbr_sd(str, opt, i, 2);
+	if (ft_strchrstr("#.o", opt, '&') && nbr != 0)
+		nbr--;
 	zero = ft_strnew(nbr);
 	ft_memset(zero, '0', nbr);
 	(**str == '\0') ? zero[0] = '\0' : zero[0];

@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 20:35:13 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/21 16:46:53 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/26 22:21:20 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static	char	*ft_insert_caract(char *opt, int nbr_letters_add)
 			if ((nbr = ft_atoi(&opt[i]) - nbr_letters_add) < 1)
 				return (NULL);
 			ft_edit_nbr_carac(opt, &nbr);
+			if (ft_strchr(opt, ' ') && c == '0')
+				nbr--;
 			space = ft_strnew(nbr);
 			ft_memset(space, c, nbr);
 			return (space);
@@ -58,30 +60,33 @@ static	char	*ft_insert_caract(char *opt, int nbr_letters_add)
 void			ft_add_space(char **tmp2, char *opt)
 {
 	char *str_added;
+	char *del;
+
 	str_added = ft_insert_caract(opt, ft_strlen(*tmp2));
-	if (str_added != NULL)
+	if (str_added && *tmp2)
 	{
+		del = *tmp2;
 		if (ft_strchr(opt, '-') || ft_strchrstr("0p", opt, '&'))
-			*tmp2 = ft_freejoin(*tmp2, str_added, 1);
+			*tmp2 = ft_freejoin(*tmp2, str_added, 1); //---------
 		else
-			*tmp2 = ft_freejoin(str_added, *tmp2, 0);
+			*tmp2 = ft_freejoin(str_added, *tmp2, 0); // ----------
+	//	ft_putstr(del);
+	//	ft_strdel(&del);
 	}
 }
 
 void			ft_add_plus(char *opt, char **tmp2)
 {
-	if (ft_strchr(opt, ' ') && !ft_strchr(opt, '+') && *tmp2[0] != '-')
-		if (!ft_strchr(opt, '.'))
-			*tmp2 = ft_freejoin(" ", *tmp2, 3);
 	if (!ft_strchr(opt, '-'))
 	{
 			ft_precision((char **)tmp2, opt);
+//	ft_putendl("la");
 	}
 	if (ft_strchrstr("0+", opt, '&') && !ft_strchr(*tmp2, '-'))
 	{
 		if (ft_strchr(opt, '.'))
 			ft_precision((char **)tmp2, opt);
-		if (*tmp2[0] != '0')
+		if (*tmp2[0] != '0' || (*tmp2[0] == '0' && (ft_strlen(*tmp2) == 1)))
 			*tmp2 = ft_freejoin("+", *tmp2, 1);
 		else
 			*tmp2[0] = '+';

@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 11:58:26 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/21 12:44:20 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/26 17:40:58 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int			ft_printf_s(char **new_str, int i, va_list vl, char *opt)
 int			ft_printf_c(char **new_str, int i, va_list vl, char *opt)
 {
 	char	*c_to_s;
+	char	*del;
 	int		len;
 
 	len = 0;
@@ -75,6 +76,7 @@ int			ft_printf_c(char **new_str, int i, va_list vl, char *opt)
 		c_to_s[0] = '\1';
 	len = ft_strlen(c_to_s);
 	ft_add_space((char **)&c_to_s, opt);
-	*new_str = ft_freejoin(ft_strsub(*new_str, 0, i, 1), c_to_s, 2);
+	del = ft_strsub(*new_str, 0, i, 1);
+	*new_str = ft_freejoin(del, c_to_s, 2);
 	return (len);
 }

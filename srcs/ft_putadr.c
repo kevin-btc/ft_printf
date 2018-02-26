@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 19:33:46 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/20 15:54:39 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/26 16:48:41 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,16 @@ void	ft_check_type_x(char **base, char *opt)
 void	ft_apply_opt(char *opt, t_hex *hex)
 {
 	char	*tmp;
-	char	*del;
 	
-	tmp = ft_strnew(0);
-	del = tmp;
+	tmp = "";
 	if (ft_strchr(opt, '.') || (ft_strchrstr("#x", opt, '|') && !ft_strchr(opt, '-')))
 		ft_precision(&hex->res, opt);
 	if (hex->res[0] != '\0' || ft_strchr(opt, 'p'))
 	{
-		if (ft_strchr(opt, '#') && ft_strchr(opt, 'x') && !ft_strchr(opt, '.'))
+//	ft_putendl(hex->res); // --------------------------------
+		if (ft_strchr(opt, '#') && ft_strchr(opt, 'x') /*&& !ft_strchr(opt, '.')*/)
 			tmp = "0x";
-		else if (ft_strchr(opt, '#') && ft_strchr(opt, 'X') && !ft_strchr(opt, '.'))
+		else if (ft_strchr(opt, '#') && ft_strchr(opt, 'X') /*&& !ft_strchr(opt, '.')*/)
 			tmp = "0X";
 		else if (ft_strchr(opt, 'p'))
 			tmp = "0x";
@@ -47,7 +46,6 @@ void	ft_apply_opt(char *opt, t_hex *hex)
 		hex->res = "0";
 	if (hex->res[0] == '\0' && ft_strchr(opt, '#'))
 		hex->res = "0";
-	ft_strdel(&del);
 }
 
 int		ft_count_nbr(unsigned long long value, int base)
@@ -81,6 +79,7 @@ char			*ft_putadr(unsigned long long adr, char *opt, int base)
 		adr /= (unsigned long long)base;
 	}
 	ft_apply_opt(opt, hex);
+//	ft_putendl(hex->res); //---------------------------
 	ft_add_space(&hex->res, opt);
 	return (hex->res);
 }

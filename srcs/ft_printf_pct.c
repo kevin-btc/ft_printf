@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 15:50:59 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/19 20:32:40 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/26 22:31:37 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ static char	*ft_add_pct_left(char *opt, char *str, int *len, int i)
 	char *del;
 
 	tmp2 = ft_strnew(0);
+	del = tmp2;
 	ft_add_space(&tmp2, opt);
 	tmp2 = ft_strjoin("%", tmp2 + 1);
+	ft_strdel(&del);
 	*len = ft_strlen(tmp2);
 	del = ft_strsub(str,0 ,i , 0);
 	tmp2 = ft_freejoin(del, tmp2, 2);
@@ -43,11 +45,13 @@ static char	*ft_add_pct_left(char *opt, char *str, int *len, int i)
 static char	*ft_add_pct(char *opt, char *str, int *len, int i)
 {
 	char *tmp2;
+	char *del;
 
 	tmp2 = ft_strdup("%");
 	ft_add_space(&tmp2, opt);
 	*len = ft_strlen(tmp2);
-	tmp2 = ft_freejoin(ft_strsub(str,0 ,i , 0), tmp2, 2);
+	del = ft_strsub(str,0 ,i ,0);
+	tmp2 = ft_freejoin(del, tmp2, 2);
 	return (tmp2);
 }
 

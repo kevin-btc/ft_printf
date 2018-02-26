@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 18:36:40 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/21 11:55:53 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/26 23:09:01 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,27 @@ void	ft_skip_space(char *str, int i, int *j)
 	}
 }
 
-static void	ft_add_word_str(char **str, int *i, int j, va_list vl)
+static void	ft_invalide_conv(char **str, int *i, int *j)
 {
 	char	*tmp;
 
-	tmp = ft_strsub(*str, *i + j + 2, ft_strlen(*str), 0);
+	ft_skip_space(*str, *i, j);
+	tmp = ft_strsub(*str, *i  + *j + 1, ft_strlen(*str ), 0);
+	while (ft_strchrstr("+-#", *str + *j, '|'))
+		*j = *j - 1;
+	ft_add_space(&tmp, ft_get_opt(*str + *i));
+	*str = ft_freejoin(ft_strsub(*str, 0, *i, 0), tmp, 0);
+	*i = *i - 1;
+
+}
+
+static void	ft_add_word_str(char **str, int *i, int j, va_list vl)
+{
+	char	*tmp;
+	int		len;
+
+	len = ft_strlen(*str);
+	tmp = ft_strsub(*str, *i + j + 2, len, 0);
 	*str = ft_freejoin(ft_find_conv(*str, i, vl), tmp, 2);
 	*i = *i - 1;
 }
@@ -37,7 +53,6 @@ int		ft_printf(const char *format, ...)
 	int		i;
 	int		j;
 	char	*new_str;
-	char	*tmp;
 
 	new_str = ft_strdup(format);
 	i = 0;
@@ -50,15 +65,7 @@ int		ft_printf(const char *format, ...)
 			if (ft_check_valide_conv(&new_str[i + j + 1], &j) == 1)
 				ft_add_word_str(&new_str, &i, j, vl);
 			else
-			{
-				ft_skip_space(new_str, i, &j);
-				tmp = ft_strsub(new_str, i  + j + 1, ft_strlen(new_str ), 0);
-				while (ft_strchrstr("+-#", &new_str[j], '|'))
-					j++;
-				ft_add_space(&tmp, ft_get_opt(new_str + i));
-				new_str = ft_freejoin(ft_strsub(new_str, 0, i, 0), tmp, 0);
-				i--;
-			}
+				ft_invalide_conv(&new_str, &i, &j);
 		}
 		i++;
 	}
