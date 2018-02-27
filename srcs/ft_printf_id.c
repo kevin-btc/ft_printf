@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 15:33:36 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/26 15:25:28 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/27 22:58:54 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,42 @@ static char	*ft_cast_param_ild(va_list vl, char *opt)
 		tmp2 = ft_itoa(va_arg(vl, int));
 	return (tmp2);
 }
+/*
+int			ft_check_point(char *opt)
+{
+	int i;
+	int check;
 
+	i = ft_strlen(opt);
+	check = 0;
+	while (i)
+	{
+		if (opt[i] == '.')
+		{
+			while (i)
+			{
+				if (ft_isdigit(opt[i]) && opt[i] != '0')
+				{
+					check = 1;
+					break;
+				}
+				else
+					check = 0;
+				i--;
+			}
+		}
+		if (check == 1)
+			break;
+		i--;
+	} 
+	return (check);
+}
+*/
 int			ft_printf_id(char **new_str, int i, va_list vl, char *opt)
 {
 	char	*tmp;
 	char	*tmp2;
+//	char	*ptr_trash;
 	char	*adr;
 	int		len;
 
@@ -76,7 +107,12 @@ int			ft_printf_id(char **new_str, int i, va_list vl, char *opt)
 		ft_add_plus(opt, &tmp2);
 	if (ft_strchr(opt, '.'))
 		ft_precision(&tmp2, opt);
-	ft_add_space((char **)&tmp2, opt);
+//	if (ft_check_point(opt))
+//	{
+//		ptr_trash = tmp2;
+		ft_add_space((char **)&tmp2, opt);
+//		ft_strdel(&ptr_trash);
+//	}
 	if (ft_strchr(tmp2, '0') && ft_strchr(tmp2, '-'))
 	{
 		if (!ft_strchrstr("jllD", opt, '|'))

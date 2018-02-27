@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 14:22:02 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/26 21:41:01 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/27 23:43:14 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,20 @@ static char	*ft_cast_param_xobup(va_list vl, char *opt)
 
 int			ft_printf_xobup(char **new_str, int i, va_list vl, char *opt)
 {
-//	char	*tmp;
+	char	*tmp;
 	char	*tmp2;
 	char	*adr;
 	int		len;
 
-//	tmp = *new_str;
 	tmp2 = ft_cast_param_xobup(vl, opt);
 	if ((adr = ft_strchr(opt, '.')) && (*(adr + 1) == '0' ||
 	ft_isalpha(*(adr + 1))) && *tmp2 == '0' && ft_strchr(opt, 'x'))
-		tmp2 = ft_strdup("");
+		tmp2 = ft_strdup(""); //<------ un leak
+	tmp = tmp2;
 	len = ft_strlen(tmp2);
-	*new_str = ft_strsub(*new_str, 0, i, 0);
+	*new_str = ft_strsub(*new_str, 0, i, 1);
 	*new_str = ft_freejoin(*new_str, tmp2, 0);
-//	ft_strdel(&tmp);
+	if (ft_strcmp(tmp2, "0") != 0)
+		ft_strdel(&tmp);
 	return (len);
 }

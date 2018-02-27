@@ -6,13 +6,13 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 16:55:51 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/16 18:43:30 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/27 22:40:02 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_check_zero(const char *target)
+int		ft_check_zero(char *target)
 {
 	int i;
 
@@ -30,7 +30,7 @@ int	ft_check_zero(const char *target)
 	return (0);
 }
 
-int	ft_strchrstr(const char *search, const char *target, char cmp)
+char	*ft_strchrstr(const char *search, char *target, char cmp)
 {
 	unsigned int	i;
 	unsigned int	j;
@@ -53,8 +53,8 @@ int	ft_strchrstr(const char *search, const char *target, char cmp)
 		i++;
 	}
 	if (nbr_char == i && cmp == '&')
-		return (1);
+		return (target);
 	else if (nbr_char > 0 && cmp == '|')
-		return (1);
-	return (0);
+		return (target);
+	return (NULL);
 }
