@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 21:03:11 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/19 15:09:29 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/28 12:51:07 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@
 # include "libft.h"
 # include <inttypes.h>
 
-typedef struct  s_hex
+typedef struct s_hex
 {
 	char *base;
 	char *res;
-	char *tmp;
-}               t_hex;
+}				t_hex;
 
-int		ft_printf(const char *format, ...)
-		__attribute__((format(printf, 1, 2)));
+int		ft_printf(const char *format, ...)__attribute__((format(printf, 1, 2)));
 int		ft_printf_s(char **new_str, int i, va_list vl, char *opt);
 int     ft_printf_c(char **new_str, int i, va_list vl, char *opt);
 int		ft_printf_id(char **new_str, int i, va_list vl, char *opt);

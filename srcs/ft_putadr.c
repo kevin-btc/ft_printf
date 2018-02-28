@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 19:33:46 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/26 16:48:41 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/02/28 13:39:09 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		ft_count_nbr(unsigned long long value, int base)
 char			*ft_putadr(unsigned long long adr, char *opt, int base)
 {
 	t_hex				*hex;
+	char				*ret;
 	int					i;
 
 	i = ft_count_nbr(adr, base);
@@ -79,7 +80,11 @@ char			*ft_putadr(unsigned long long adr, char *opt, int base)
 		adr /= (unsigned long long)base;
 	}
 	ft_apply_opt(opt, hex);
-//	ft_putendl(hex->res); //---------------------------
 	ft_add_space(&hex->res, opt);
-	return (hex->res);
+
+	ret = ft_strdup(hex->res);
+	if (ft_strcmp(hex->res, "0") != 0)
+		ft_strdel(&hex->res);
+	free(hex);
+	return (ret);
 }
