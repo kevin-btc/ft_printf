@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 18:36:40 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/27 23:46:52 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/03/01 18:55:57 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,17 @@ static void	ft_invalide_conv(char **str, int *i, int *j)
 	while (ft_strchrstr("+-#", *str + *j, '|'))
 		*j = *j - 1;
 	opt = ft_get_opt(*str + *i);
-	// 1 moulitest a regler a cause du point
-	if (ft_strchrstr("123456789", opt, '|') && !ft_strchr(opt, '.'))
+	if (ft_check_point(opt, ""))
 	{
 		ptr_trash = tmp;
-		ft_add_space(&ptr_trash, opt);
+		ft_add_space(&tmp, opt);
 		ft_strdel(&opt);
 		ft_strdel(&ptr_trash);
 	}
 	tmp2 = ft_strsub(*str, 0, *i, 0);
 	ft_strdel(str);
-	*str = ft_freejoin(tmp2, tmp, 2);
+	ft_strdel(&opt);
+	*str = ft_freejoin(tmp2, tmp , 2);
 	*i = *i - 1;
 
 }

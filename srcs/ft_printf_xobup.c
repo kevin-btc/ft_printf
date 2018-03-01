@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 14:22:02 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/28 12:19:06 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/03/01 18:19:15 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ int			ft_printf_xobup(char **new_str, int i, va_list vl, char *opt)
 	{
 		if (ft_strcmp(tmp2, "0") != 0)
 			ft_strdel(&tmp2);
-		tmp2 = ft_strdup(""); //<------ un leak
+		tmp2 = ft_strdup("");
 	}
 	tmp = tmp2;
 	len = ft_strlen(tmp2);
+//	ft_putendl(tmp2);
+//	ft_putnbr(i);
 	*new_str = ft_strsub(*new_str, 0, i, 1);
 	*new_str = ft_freejoin(*new_str, tmp2, 0);
 	if (ft_strcmp(tmp, "0") != 0)

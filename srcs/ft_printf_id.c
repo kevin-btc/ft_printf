@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 15:33:36 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/27 22:58:54 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/03/01 15:57:53 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,21 @@ static void	ft_swap_sign(char *tmp2)
 {
 	int		i;
 	int		j;
+	int		k;
 	char	c;
 
 	i = 0;
 	j = 0;
+	k = 0;
 	c = '+';
-
 	while (tmp2[j] != '0' && tmp2[j])
 		j++;
 	(ft_strchr(tmp2, '-')) ? c = '-' : c;
 	while (tmp2[i])
 	{
-		if (tmp2[i] == c && i != 0)
+		while (tmp2[i + k] == ' ')
+			k++;
+		if (tmp2[i] == c && k != i)
 		{
 			tmp2[j] = c;
 			tmp2[i] = '0';
@@ -59,60 +62,38 @@ static char	*ft_cast_param_ild(va_list vl, char *opt)
 		tmp2 = ft_itoa(va_arg(vl, int));
 	return (tmp2);
 }
-/*
-int			ft_check_point(char *opt)
-{
-	int i;
-	int check;
 
-	i = ft_strlen(opt);
-	check = 0;
-	while (i)
-	{
-		if (opt[i] == '.')
-		{
-			while (i)
-			{
-				if (ft_isdigit(opt[i]) && opt[i] != '0')
-				{
-					check = 1;
-					break;
-				}
-				else
-					check = 0;
-				i--;
-			}
-		}
-		if (check == 1)
-			break;
-		i--;
-	} 
-	return (check);
-}
-*/
 int			ft_printf_id(char **new_str, int i, va_list vl, char *opt)
 {
 	char	*tmp;
 	char	*tmp2;
-//	char	*ptr_trash;
+	char	*ptr_trash;
 	char	*adr;
 	int		len;
 
 	tmp = *new_str;
+	ptr_trash = NULL;
 	tmp2 = ft_cast_param_ild(vl, opt);
 	if ((adr = ft_strchr(opt, '.')) && (*(adr + 1) == '0' ||
 		ft_isalpha(*(adr + 1))) && tmp2[0] == '0')
-		tmp2[0] = '\0';
+	{
+		ft_strdel(&tmp2);
+		tmp2 = ft_strnew(0);
+	}
+	if (ft_strchr(opt, '.'))
+	{
+		ptr_trash = tmp2;
+		if (ft_precision(&tmp2, opt) == 1 && ft_strchr(ptr_trash, '-'))
+			ft_strdel(&ptr_trash);
+	}
 	if (ft_strchr(opt, '+'))
 		ft_add_plus(opt, &tmp2);
-	if (ft_strchr(opt, '.'))
-		ft_precision(&tmp2, opt);
-//	if (ft_check_point(opt))
-//	{
-//		ptr_trash = tmp2;
+	if (ft_check_point(opt, tmp2))
+	{
+		ptr_trash = tmp2;
 		ft_add_space((char **)&tmp2, opt);
-//		ft_strdel(&ptr_trash);
-//	}
+		ft_strdel(&ptr_trash);
+	}
 	if (ft_strchr(tmp2, '0') && ft_strchr(tmp2, '-'))
 	{
 		if (!ft_strchrstr("jllD", opt, '|'))
@@ -120,11 +101,9 @@ int			ft_printf_id(char **new_str, int i, va_list vl, char *opt)
 	}
 	if (ft_strchr(tmp2, '+') && tmp2[0] == '0')
 			ft_swap_sign(tmp2);
-
 	if (ft_strchr(opt, ' ') && !ft_strchr(opt, '+') && tmp2[0] != '-')
 		if (!ft_strchr(opt, '.'))
-			tmp2 = ft_freejoin(" ", tmp2, 3);
-
+			tmp2 = ft_freejoin(" ", tmp2, 1);
 	len = ft_strlen(tmp2);
 	*new_str = ft_freejoin(ft_strsub(*new_str, 0, i, 0), tmp2, 2);
 	ft_strdel(&tmp);

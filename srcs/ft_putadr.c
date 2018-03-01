@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 19:33:46 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/28 13:39:09 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/03/01 18:58:11 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ void	ft_apply_opt(char *opt, t_hex *hex)
 		ft_precision(&hex->res, opt);
 	if (hex->res[0] != '\0' || ft_strchr(opt, 'p'))
 	{
-//	ft_putendl(hex->res); // --------------------------------
-		if (ft_strchr(opt, '#') && ft_strchr(opt, 'x') /*&& !ft_strchr(opt, '.')*/)
+		if (ft_strchr(opt, '#') && ft_strchr(opt, 'x'))
 			tmp = "0x";
-		else if (ft_strchr(opt, '#') && ft_strchr(opt, 'X') /*&& !ft_strchr(opt, '.')*/)
+		else if (ft_strchr(opt, '#') && ft_strchr(opt, 'X'))
 			tmp = "0X";
 		else if (ft_strchr(opt, 'p'))
 			tmp = "0x";
@@ -65,6 +64,7 @@ char			*ft_putadr(unsigned long long adr, char *opt, int base)
 {
 	t_hex				*hex;
 	char				*ret;
+	char				*ptr_trash;
 	int					i;
 
 	i = ft_count_nbr(adr, base);
@@ -80,8 +80,12 @@ char			*ft_putadr(unsigned long long adr, char *opt, int base)
 		adr /= (unsigned long long)base;
 	}
 	ft_apply_opt(opt, hex);
-	ft_add_space(&hex->res, opt);
-
+	if (ft_check_point(opt, hex->res) == 1)
+	{
+		ptr_trash = hex->res;
+		ft_add_space(&hex->res, opt);
+		ft_strdel(&ptr_trash);
+	}
 	ret = ft_strdup(hex->res);
 	if (ft_strcmp(hex->res, "0") != 0)
 		ft_strdel(&hex->res);
