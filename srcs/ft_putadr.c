@@ -23,10 +23,14 @@ void	ft_check_type_x(char **base, char *opt)
 void	ft_apply_opt(char *opt, t_hex *hex)
 {
 	char	*tmp;
+	char	*ptr_trash;
 	
 	tmp = "";
 	if (ft_strchr(opt, '.') || (ft_strchrstr("#x", opt, '|') && !ft_strchr(opt, '-')))
+{
+		ptr_trash = hex->res;
 		ft_precision(&hex->res, opt);
+}
 	if (hex->res[0] != '\0' || ft_strchr(opt, 'p'))
 	{
 		if (ft_strchr(opt, '#') && ft_strchr(opt, 'x'))
@@ -41,10 +45,12 @@ void	ft_apply_opt(char *opt, t_hex *hex)
 	if (ft_strchr(opt, 'p') && hex->res[0] == '\0')
 			tmp = "0x0";
 		hex->res = ft_freejoin(tmp, hex->res, 1);
-	if (hex->res[0] == '\0' && !ft_strchr(opt, '.'))
-		hex->res = "0";
-	if (hex->res[0] == '\0' && ft_strchr(opt, '#'))
-		hex->res = "0";
+	if (hex->res[0] == '\0' && (!ft_strchr(opt, '.') || ft_strchr(opt, '#')))
+	{
+		ptr_trash = hex->res;
+		hex->res = ft_strdup("0");
+		ft_strdel(&ptr_trash);
+	}
 }
 
 int		ft_count_nbr(unsigned long long value, int base)
@@ -87,8 +93,7 @@ char			*ft_putadr(unsigned long long adr, char *opt, int base)
 		ft_strdel(&ptr_trash);
 	}
 	ret = ft_strdup(hex->res);
-	if (ft_strcmp(hex->res, "0") != 0)
-		ft_strdel(&hex->res);
+	ft_strdel(&hex->res);
 	free(hex);
 	return (ret);
 }

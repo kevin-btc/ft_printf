@@ -37,13 +37,15 @@ static void		ft_apply_opt(char *opt, char **str, int *space)
 	if (ft_strchr(opt, 'S') || ft_strchrstr("ls", opt, '&'))
 		*str = ft_putwstr((wchar_t *)*str);
 	if (ft_strchr(opt, '.'))
+	{
 		ft_precision((char **)str, opt);
+	}
+	ptr_trash = *str;
 	if (ft_check_point(opt, *str))
 	{
-		ptr_trash = *str;
 		ft_add_space(str, opt);
 		*space = 1;
-		if (ft_strchr(opt, 'S') || ft_strchrstr("ls", opt, '&'))
+		if (ft_strchrstr("S.",opt, '|') || ft_strchrstr("ls", opt, '&'))
 			ft_strdel(&ptr_trash);
 	}
 }
@@ -52,10 +54,13 @@ int				ft_printf_s(char **new_str, int i, va_list vl, char *opt)
 {
 	char	*str;
 	char	*del;
+	char	*ptr_trash;
+	char	*ptr_cmp;
 	int		len;
 	int		space;
 
 	str = va_arg(vl, char *);
+	ptr_cmp = str;
 	space = 0;
 	if (str == NULL)
 	{
@@ -65,12 +70,17 @@ int				ft_printf_s(char **new_str, int i, va_list vl, char *opt)
 		return (len);
 	}
 	ft_apply_opt(opt, &str, &space);
+	ptr_trash = str;
 	len = ft_strlen(str);
 	del = ft_strsub(*new_str, 0, i, 1);
 	if (ft_strchr(opt, 'S') || ft_strchrstr("ls", opt, '&') || space == 1)
 		*new_str = ft_freejoin(del, str, 2);
 	else
+	{
 		*new_str = ft_freejoin(del, str, 0);
+		if (ft_strcmp(ptr_trash, ptr_cmp) != 0)
+			ft_strdel(&ptr_trash);
+	}
 	return (len);
 }
 

@@ -19,7 +19,7 @@ char	*ft_get_opt(char *s)
 	int			k;
 	const char *flags;
 
-	flags = "#-+jz hl.";
+	flags = "#-+jz hl.*";
 	i = 1;
 	k = 1;
 	while (s[i])
@@ -45,7 +45,7 @@ int		ft_check_valide_conv(char *s, int *j)
 	const char *flags;
 
 	format = "scSbpdDioOuUXxC%";
-	flags = "#-+jz hl.";
+	flags = "#-+jz hl.*";
 	while (s[*j])
 	{
 		if (ft_strchr(format, s[*j]))
@@ -74,5 +74,6 @@ char	*ft_find_conv(char *new_str, int *i, va_list vl)
 	else if (ft_strchrstr("XxOoUubp", opt, '|'))
 		*i += ft_printf_xobup(&new_str, *i, vl, opt);
 	ft_strdel(&opt);
+
 	return (new_str);
 }

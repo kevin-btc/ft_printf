@@ -62,9 +62,9 @@ static int	ft_edit_nbr_x(char **str, char *opt)
 
 int		ft_precision(char **str, char *opt)
 {
-	int		nbr;
+	int	nbr;
 	char	*zero;
-	int		i;
+	int	i;
 
 	i = 0;
 	zero = NULL;
@@ -83,7 +83,7 @@ int		ft_precision(char **str, char *opt)
 			nbr = ft_edit_nbr_sd(str, opt, i, 2);
 	if (ft_strchrstr("#.o", opt, '&') && nbr != 0)
 		nbr--;
-	if (nbr > 0)
+	if (nbr >= 0)
 	{
 		zero = ft_strnew(nbr);
 		ft_memset(zero, '0', nbr);

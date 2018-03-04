@@ -56,7 +56,6 @@ static char	*ft_cast_param_xobup(va_list vl, char *opt)
 
 int			ft_printf_xobup(char **new_str, int i, va_list vl, char *opt)
 {
-	char	*tmp;
 	char	*tmp2;
 	char	*adr;
 	int		len;
@@ -65,17 +64,11 @@ int			ft_printf_xobup(char **new_str, int i, va_list vl, char *opt)
 	if ((adr = ft_strchr(opt, '.')) && (*(adr + 1) == '0' ||
 	ft_isalpha(*(adr + 1))) && *tmp2 == '0' && ft_strchr(opt, 'x'))
 	{
-		if (ft_strcmp(tmp2, "0") != 0)
 			ft_strdel(&tmp2);
 		tmp2 = ft_strdup("");
 	}
-	tmp = tmp2;
 	len = ft_strlen(tmp2);
-//	ft_putendl(tmp2);
-//	ft_putnbr(i);
 	*new_str = ft_strsub(*new_str, 0, i, 1);
-	*new_str = ft_freejoin(*new_str, tmp2, 0);
-	if (ft_strcmp(tmp, "0") != 0)
-		ft_strdel(&tmp);
+	*new_str = ft_freejoin(*new_str, tmp2, 2);
 	return (len);
 }

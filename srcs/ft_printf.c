@@ -53,13 +53,16 @@ static void	ft_invalide_conv(char **str, int *i, int *j)
 static void	ft_add_word_str(char **str, int *i, int j, va_list vl)
 {
 	char	*tmp;
-	int		len;
+	char	*tmp2;
+	int	len;
 
 	tmp = NULL;
 	len = ft_strlen(*str);
 	tmp = ft_strsub(*str, *i + j + 2, len, 0);
-	*str = ft_freejoin(ft_find_conv(*str, i, vl), tmp, 2);
+	tmp2 = ft_find_conv(*str, i, vl);
+	*str = ft_freejoin(tmp2, tmp, 2);
 	*i = *i - 1;
+
 }
 
 int		ft_printf(const char *format, ...)

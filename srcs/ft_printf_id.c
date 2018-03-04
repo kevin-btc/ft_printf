@@ -68,12 +68,14 @@ int			ft_printf_id(char **new_str, int i, va_list vl, char *opt)
 	char	*tmp;
 	char	*tmp2;
 	char	*ptr_trash;
+	char	*ptr_trash1;
 	char	*adr;
 	int		len;
 
 	tmp = *new_str;
-	ptr_trash = NULL;
+ptr_trash = NULL;
 	tmp2 = ft_cast_param_ild(vl, opt);
+	ptr_trash = tmp2;
 	if ((adr = ft_strchr(opt, '.')) && (*(adr + 1) == '0' ||
 		ft_isalpha(*(adr + 1))) && tmp2[0] == '0')
 	{
@@ -83,16 +85,18 @@ int			ft_printf_id(char **new_str, int i, va_list vl, char *opt)
 	if (ft_strchr(opt, '.'))
 	{
 		ptr_trash = tmp2;
-		if (ft_precision(&tmp2, opt) == 1 && ft_strchr(ptr_trash, '-'))
-			ft_strdel(&ptr_trash);
+	ft_precision(&tmp2, opt);
 	}
 	if (ft_strchr(opt, '+'))
 		ft_add_plus(opt, &tmp2);
 	if (ft_check_point(opt, tmp2))
 	{
-		ptr_trash = tmp2;
+	//	if (ptr_trash)
+	//		ft_strdel(&ptr_trash);
+		ptr_trash1 = tmp2;
 		ft_add_space((char **)&tmp2, opt);
-		ft_strdel(&ptr_trash);
+		ft_strdel(&ptr_trash1);
+
 	}
 	if (ft_strchr(tmp2, '0') && ft_strchr(tmp2, '-'))
 	{
@@ -107,5 +111,6 @@ int			ft_printf_id(char **new_str, int i, va_list vl, char *opt)
 	len = ft_strlen(tmp2);
 	*new_str = ft_freejoin(ft_strsub(*new_str, 0, i, 0), tmp2, 2);
 	ft_strdel(&tmp);
+
 	return (len);
 }

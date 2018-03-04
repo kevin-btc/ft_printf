@@ -50,6 +50,8 @@ int			ft_check_point(char *opt, char *str)
 	}
 	while (opt[i] && opt[i] != '.')
 		i++;
+	if (opt[i] == '.')
+		check = 1;
 	ft_uncheck_if(&check, ft_atoi(opt + i + 1), nbr_space, str);
 	return (check);
 }

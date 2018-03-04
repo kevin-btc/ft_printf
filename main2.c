@@ -21,7 +21,7 @@ int main(void)
 {
 	wchar_t *str = L"1 ☂ 2 € 3 ☯ 4 ∞ 5 ❤ 6 ♫ ";
 
-/*	setlocale(LC_ALL, "");
+	setlocale(LC_ALL, "");
 	ft_printf("_____TEST %%s %%S _____\n");
 	ft_printf("%s\n", NULL);
 	ft_printf("%50S\n", L"ݗݜशব");
@@ -29,10 +29,10 @@ int main(void)
 	ft_printf("%S\n", NULL);
 	ft_printf("%s%s\n", "test", "test");//ok
 	ft_printf("%s%s%s\n", "test", "test", "test");//ok
-//	ft_printf("%15S\n", L"我是一只猫。"); //behavior
-//	ft_printf("%S\n", L"我是一只猫。"); //behavior
+	ft_printf("%15S\n", L"我是一只猫。"); //behavior
+	ft_printf("%S\n", L"我是一只猫。"); //behavior
 	ft_printf("%10s is a string\n", "this");
-//	ft_printf("% T%s\n", "test"); //behavior
+	ft_printf("% T%s\n", "test"); //behavior
 	ft_printf("%s\n", 0);
 	ft_printf("ls = %ls\n", str);
 	ft_printf("S = %S\n", str);
@@ -46,7 +46,7 @@ int main(void)
 	ft_printf("_____TEST %%d %%i _____\n");
 	ft_printf("%d\n", 42);//ok
 	ft_printf("%d%d\n", 42, 41);//ok
-	ft_printf("%d%d%d\n", 42, 43, 44);//ok
+	ft_printf("%d%d%d\n", 41, 43, 44);//ok
 	ft_printf("%ld\n", 2147483647); //ok
 	ft_printf("%lld\n", 9223372036854775807); //ok
 	ft_printf("%20.15d\n", -54321);//ok
@@ -57,7 +57,7 @@ int main(void)
 	ft_printf("%hhd\n", 0);
 	ft_printf("%jd\n", 9223372036854775807);//ok
 	ft_printf("%zd\n", 4294967295);//ok
-	ft_printf("%hh50.20ld\n", 2); //behavior
+//	ft_printf("%hh50.20ld\n", 2); //behavior
 	ft_printf("%05.1d\n", -1);
 	ft_printf("{% 03d}\n", 0); //behavior
 	ft_printf("%15.4d\n", -42);
@@ -102,7 +102,7 @@ int main(void)
 	ft_printf("%x\n", 1000);//ok
 	ft_printf("%#X\n", 1000);//ok
 	ft_printf("%C\n", 15000);//ok
-//	ft_printf("% ");
+	ft_printf("% ");
 	ft_printf("{%10R}\n");
 	ft_printf("dfsfdsfsgdsfgd%c  gtrwtrtwrwrt\n", 0);
 	ft_printf("{%05p}\n", 0);
@@ -126,50 +126,47 @@ int main(void)
 	ft_printf("%12.10x\n", 424242424);
 	ft_printf("pb 42fs = {%10R}\n");
 	   printf("pb 42fs = {%10R}\n");
-*/	ft_printf("%O\n", 0); //<<<-------leak
-//	ft_printf("{%-15Z}\n", 123); <<----- pas gere
-/*	ft_printf("%.2s\n", "424242"); // <<<--------leak
-	ft_printf("%5.2s is a string\n", "this"); // <<<--- leak
-	ft_printf("%hx", 4294967296);// <-----leak
-	ft_printf("%#x\n", 0); //<---- leak
-	ft_printf("%#.x %#.0x\n", 0, 0);// <---- leak
-*///	ft_printf("%.5x\n", 5427);
-//	ft_printf("%s");
-//	ft_printf("%5.c %5.0c\n", 0, 0);
-/*	//ft_printf("%5.2s\n", "coucou");
-	//	ft_printf("%#08x\n", 42);
-	//	char *str = "coucou";
-	//	ft_printf("->%U\n", 30000000000);
-	//	ft_printf("%u\n", -1);
-	//	   ft_printf("%.50lx\n", 4294967296);
-	//	ft_printf("%X\n", 10);
-	//	ft_printf("%x\n", 10);
-	//	ft_printf("%b\n", "coucou");
-	//	ft_printf("%o\n", 10);
-	//	ft_printf("%50S\n", str);
-	//	ft_printf("%#08x\n", 42);
-	//	ft_printf("%#.x%#.0x\n", 0, 0);
-	//	ft_printf("coucou %s toi\n");
+	ft_printf("%O\n", 0); 
+	ft_printf("%#x\n", 0); 
+	ft_printf("%#.x %#.0x\n", 0, 0);
+	ft_printf("{%-15Z}\n", 123); //<----- pas gere
+	ft_printf("%4.2s\n", "424242");
+	ft_printf("%9.10s is a string\n", "this");
+	ft_printf("%hx", 4294967296);
+	ft_printf("%.5x\n", 5427);
+	ft_printf("%s");
+	ft_printf("%5.c %5.0c\n", 0, 0);
+	ft_printf("%5.2s\n", "coucou");
+	ft_printf("%#08x\n", 42);
+	ft_printf("->%U\n", 30000000000);
+	ft_printf("%u\n", -1);
+	ft_printf("%.50lx\n", 4294967296);
+	ft_printf("%X\n", 10);
+	ft_printf("%x\n", 10);
+	ft_printf("%b\n", "coucou");
+	ft_printf("%o\n", 10);
+	ft_printf("%50S\n", str);
+	ft_printf("%#08x\n", 42);
+	ft_printf("%#.x%#.0x\n", 0, 0);
+	ft_printf("coucou %s toi\n");
 	ft_printf("%C\n", L'☂');
 	ft_printf("% Z \n", "test");
 	ft_printf("%10.  Z\n");
 	ft_printf("%#.x %#.5x\n", 42, 42);
 	ft_printf("ft hexa = %#X\n", 0);// ULLONG_MAX);
-	//	ft_printf("ft hexa = %#llx\n", 0);
-	//		ft_printf("ft hexa = %x\n", -999999999);
-
-			ft_printf("ft--->%% %5% %%%");
-			ft_printf("ft--->%-5%");
-			ft_printf("%s", "this is a string");
-			ft_printf("%s%s", "this is a string","k");
-			ft_printf("%s%s ", "this is a string","k");
-			ft_printf("%s ", "this is a string");
-			ft_printf("%s %d%s   %  %%coucou %c %p %hhd toi %i", "salut", 12,"femme", 'c', 16, 777, 12, 1258);
-			ft_printf("%x", 42);
-			long long int nbr = 245884445778;
-			ft_printf("ft_printf %%-5%%=> %-5% <\n");
-			ft_printf("ft_printf %%05%%=> %05% <\n");
-			ft_printf("ft_printf %%-05%%=> %05%  <\n");
-			ft_printf("s: %s, p: %p, d:%d\n", "a string", &nbr, 42);
-	*/		getchar();
+	ft_printf("ft hexa = %#llx\n", 0);
+	ft_printf("ft hexa = %x\n", -999999999);
+	ft_printf("ft--->%% %5% %%%\n");
+	ft_printf("ft--->%-5%\n");
+	ft_printf("%s", "this is a string\n");
+	ft_printf("%s%s", "this is a string\n","k");
+	ft_printf("%s%s ", "this is a string\n","k");
+	ft_printf("%s ", "this is a string\n");
+	ft_printf("%s %d%s   %  %%coucou %c %p %hhd toi %i\n", "salut", 12,"femme", 'c', 16, 777, 12, 1258);
+	ft_printf("%x\n", 42);
+	ft_printf("ft_printf %%-5%%=> %-5% <\n");
+	ft_printf("ft_printf %%05%%=> %05% <\n");
+	ft_printf("ft_printf %%-05%%=> %05%  <\n");
+	ft_printf("s: %s, p: %p, d:%d\n", "a string", &str, 42);
+	getchar();
 }
