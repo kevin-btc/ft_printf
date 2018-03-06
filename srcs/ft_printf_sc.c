@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 11:58:26 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/28 18:52:18 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/03/06 22:55:06 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,30 @@ static char		*ft_putwstr(wchar_t *s)
 	return (new_str);
 }
 
-static void		ft_apply_opt(char *opt, char **str, int *space)
+static void		ft_apply_opt(char *opt, char **str)
 {
 	char	*ptr_trash;
 
 	if (ft_strchr(opt, 'S') || ft_strchrstr("ls", opt, '&'))
 		*str = ft_putwstr((wchar_t *)*str);
 	if (ft_strchr(opt, '.'))
-	{
 		ft_precision((char **)str, opt);
-	}
 	ptr_trash = *str;
 	if (ft_check_point(opt, *str))
 	{
 		ft_add_space(str, opt);
-		*space = 1;
-		if (ft_strchrstr("S.",opt, '|') || ft_strchrstr("ls", opt, '&'))
-			ft_strdel(&ptr_trash);
+		ft_strdel(&ptr_trash);
 	}
+}
+
+static int		ft_isnull(char **new_str, int i)
+{
+	char *del;
+
+	del = NULL;
+	del = ft_strsub(*new_str, 0, i, 1);
+	*new_str = ft_freejoin(del, "(null)", 0);
+	return (6);
 }
 
 int				ft_printf_s(char **new_str, int i, va_list vl, char *opt)
@@ -55,69 +61,19 @@ int				ft_printf_s(char **new_str, int i, va_list vl, char *opt)
 	char	*str;
 	char	*del;
 	char	*ptr_trash;
-	char	*ptr_cmp;
 	int		len;
-	int		space;
 
 	str = va_arg(vl, char *);
-	ptr_cmp = str;
-	space = 0;
+	if (!(ft_strchr(opt, 'S') || ft_strchrstr("ls", opt, '&')))
+		str = ft_strdup((str) ? str : "(null)");
 	if (str == NULL)
-	{
-		del = ft_strsub(*new_str, 0, i, 1);
-		*new_str = ft_freejoin(del, "(null)", 0);
-		len = 6;
-		return (len);
-	}
-	ft_apply_opt(opt, &str, &space);
+		return (ft_isnull(new_str, i));
+	ft_apply_opt(opt, &str);
 	ptr_trash = str;
 	len = ft_strlen(str);
 	del = ft_strsub(*new_str, 0, i, 1);
-	if (ft_strchr(opt, 'S') || ft_strchrstr("ls", opt, '&') || space == 1)
-		*new_str = ft_freejoin(del, str, 2);
-	else
-	{
-		*new_str = ft_freejoin(del, str, 0);
-		if (ft_strcmp(ptr_trash, ptr_cmp) != 0)
-			ft_strdel(&ptr_trash);
-	}
-	return (len);
-}
-
-void			ft_wchar_to_str(char **c_to_s, va_list vl)
-{
-	if ((*c_to_s = ft_putwchar((wchar_t)va_arg(vl, int))) == 0)
-	{
-		*c_to_s = ft_strnew(1);
-		*c_to_s[0] = '\0';
-	}
-}
-
-int				ft_printf_c(char **new_str, int i, va_list vl, char *opt)
-{
-	char	*c_to_s;
-	char	*ptr_trash;
-	char	*del;
-	int		len;
-
-	len = 0;
-	c_to_s = ft_strnew(1);
-	if (ft_strchr(opt, 'C') || ft_strchrstr("lc", opt, '&'))
-	{
-		ft_strdel(&c_to_s);
-		ft_wchar_to_str(&c_to_s, vl);
-	}
-	else if (ft_strchr(opt, 'c'))
-		c_to_s[0] = va_arg(vl, int);
-	(c_to_s[0] == '\0') ? c_to_s[0] = '\1' : c_to_s[0];
-	len = ft_strlen(c_to_s);
-	if (ft_check_point(opt, c_to_s))
-	{
-		ptr_trash = c_to_s;
-		ft_add_space((char **)&c_to_s, opt);
+	*new_str = ft_freejoin(del, str, 2);
+	if (ft_strcmp(ptr_trash, str) != 0)
 		ft_strdel(&ptr_trash);
-	}
-	del = ft_strsub(*new_str, 0, i, 1);
-	*new_str = ft_freejoin(del, c_to_s, 2);
 	return (len);
 }

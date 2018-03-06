@@ -6,13 +6,13 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 18:36:40 by kgricour          #+#    #+#             */
-/*   Updated: 2018/03/01 18:55:57 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/03/06 18:27:56 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_skip_space(char *str, int i, int *j)
+static void	ft_skip_space(char *str, int i, int *j)
 {
 	if (str[i + *j] == ' ')
 	{
@@ -29,9 +29,8 @@ static void	ft_invalide_conv(char **str, int *i, int *j)
 	char	*opt;
 	char	*ptr_trash;
 
-
 	ft_skip_space(*str, *i, j);
-	tmp = ft_strsub(*str, *i  + *j + 1, ft_strlen(*str ), 0);
+	tmp = ft_strsub(*str, *i + *j + 1, ft_strlen(*str), 0);
 	while (ft_strchrstr("+-#", *str + *j, '|'))
 		*j = *j - 1;
 	opt = ft_get_opt(*str + *i);
@@ -41,20 +40,20 @@ static void	ft_invalide_conv(char **str, int *i, int *j)
 		ft_add_space(&tmp, opt);
 		ft_strdel(&opt);
 		ft_strdel(&ptr_trash);
+		tmp = ft_strsub(tmp, 1, ft_strlen(tmp), 1);
 	}
 	tmp2 = ft_strsub(*str, 0, *i, 0);
 	ft_strdel(str);
 	ft_strdel(&opt);
-	*str = ft_freejoin(tmp2, tmp , 2);
+	*str = ft_freejoin(tmp2, tmp, 2);
 	*i = *i - 1;
-
 }
 
 static void	ft_add_word_str(char **str, int *i, int j, va_list vl)
 {
 	char	*tmp;
 	char	*tmp2;
-	int	len;
+	int		len;
 
 	tmp = NULL;
 	len = ft_strlen(*str);
@@ -62,10 +61,9 @@ static void	ft_add_word_str(char **str, int *i, int j, va_list vl)
 	tmp2 = ft_find_conv(*str, i, vl);
 	*str = ft_freejoin(tmp2, tmp, 2);
 	*i = *i - 1;
-
 }
 
-int		ft_printf(const char *format, ...)
+int			ft_printf(const char *format, ...)
 {
 	va_list	vl;
 	int		i;

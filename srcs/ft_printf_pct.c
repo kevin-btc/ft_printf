@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 15:50:59 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/27 23:00:42 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/03/05 22:50:42 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,14 @@ static char	*ft_add_pct_left(char *opt, char *str, int *len, int i)
 	char *ptr_trash;
 
 	tmp2 = ft_strnew(0);
-//	if (ft_strchrstr("123456789", opt, '|') && !ft_strchr(opt, '.'))
-//	{
-		del = tmp2;
-		ft_add_space(&tmp2, opt);
-		ft_strdel(&del);
-//	}
+	del = tmp2;
+	ft_add_space(&tmp2, opt);
+	ft_strdel(&del);
 	del = tmp2;
 	tmp2 = ft_strjoin("%", tmp2 + 1);
 	ft_strdel(&del);
 	*len = ft_strlen(tmp2);
-	del = ft_strsub(str,0 ,i , 0);
+	del = ft_strsub(str, 0, i, 0);
 	ptr_trash = tmp2;
 	tmp2 = ft_freejoin(del, ptr_trash, 0);
 	ft_strdel(&ptr_trash);
@@ -65,20 +62,20 @@ static char	*ft_add_pct(char *opt, char *str, int *len, int i)
 		ft_strdel(&del);
 	}
 	*len = ft_strlen(tmp2);
-	del = ft_strsub(str,0 ,i ,0);
+	del = ft_strsub(str, 0, i, 0);
 	ptr_trash = tmp2;
 	tmp2 = ft_freejoin(del, ptr_trash, 0);
 	ft_strdel(&ptr_trash);
 	return (tmp2);
 }
 
-int        	ft_printf_pct(char **new_str, char *opt, int i)
+int			ft_printf_pct(char **new_str, char *opt, int i)
 {
-	char    *tmp2;
+	char	*tmp2;
 	char	*del;
-	int	j;
-	int	len;
-	int noopt;
+	int		j;
+	int		len;
+	int		noopt;
 
 	j = 0;
 	len = 0;

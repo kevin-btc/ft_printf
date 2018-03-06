@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 14:46:50 by kgricour          #+#    #+#             */
-/*   Updated: 2018/03/01 13:48:59 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/03/05 20:51:04 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,22 +93,6 @@ int				ft_isblank(int c);
 char			*ft_putadr(unsigned long long p, char *opt, int base);
 void			ft_wputstr(const wchar_t *str);
 char			*ft_freejoin(char *s1, char *s2, int n);
-char        	*ft_strchrstr(const char *search, char *target, char cmp);
-
-#endif
-
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-
-# define BUFF_SIZE 8
-
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-
-int get_next_line(const int fd, char **line);
+char			*ft_strchrstr(const char *search, char *target, char cmp);
 
 #endif

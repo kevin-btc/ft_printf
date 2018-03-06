@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 17:33:45 by kgricour          #+#    #+#             */
-/*   Updated: 2018/02/20 18:46:54 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/03/05 22:59:32 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_get_opt(char *s)
 	char		*opt;
 	int			i;
 	int			k;
-	const char *flags;
+	const char	*flags;
 
 	flags = "#-+jz hl.*";
 	i = 1;
@@ -74,6 +74,5 @@ char	*ft_find_conv(char *new_str, int *i, va_list vl)
 	else if (ft_strchrstr("XxOoUubp", opt, '|'))
 		*i += ft_printf_xobup(&new_str, *i, vl, opt);
 	ft_strdel(&opt);
-
 	return (new_str);
 }

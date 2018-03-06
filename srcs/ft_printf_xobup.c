@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 14:22:02 by kgricour          #+#    #+#             */
-/*   Updated: 2018/03/01 18:19:15 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/03/06 17:08:59 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,19 @@ static char	*ft_cast_param_xobup(va_list vl, char *opt)
 
 int			ft_printf_xobup(char **new_str, int i, va_list vl, char *opt)
 {
-	char	*tmp2;
+	char	*tmp;
 	char	*adr;
 	int		len;
 
-	tmp2 = ft_cast_param_xobup(vl, opt);
+	tmp = ft_cast_param_xobup(vl, opt);
 	if ((adr = ft_strchr(opt, '.')) && (*(adr + 1) == '0' ||
-	ft_isalpha(*(adr + 1))) && *tmp2 == '0' && ft_strchr(opt, 'x'))
+	!ft_isdigit(*(adr + 1))) && ft_strcmp(tmp, "0") == 0 && ft_strchr(opt, 'x'))
 	{
-			ft_strdel(&tmp2);
-		tmp2 = ft_strdup("");
+		ft_strdel(&tmp);
+		tmp = ft_strdup("");
 	}
-	len = ft_strlen(tmp2);
+	len = ft_strlen(tmp);
 	*new_str = ft_strsub(*new_str, 0, i, 1);
-	*new_str = ft_freejoin(*new_str, tmp2, 2);
+	*new_str = ft_freejoin(*new_str, tmp, 2);
 	return (len);
 }

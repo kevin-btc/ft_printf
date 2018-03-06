@@ -6,7 +6,7 @@
 #    By: kgricour <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/09 16:06:47 by kgricour          #+#    #+#              #
-#    Updated: 2018/02/28 19:07:48 by kgricour         ###   ########.fr        #
+#    Updated: 2018/03/06 20:09:18 by kgricour         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,11 @@ SRC =   ft_strclr.c ft_strlen.c ft_strnew.c ft_putchar.c ft_putstr.c \
 		ft_printf_sc.c ft_printf_id.c ft_printf_parse.c ft_printf_pct.c \
 		ft_printf_tool.c ft_printf_xobup.c ft_putwchar.c ft_printf_dot.c \
 		ft_isalpha.c ft_islower.c ft_isupper.c ft_strchrstr.c ft_strncpy.c \
-		ft_memcpy.c ft_putendl.c ft_putendl_fd.c ft_save_val_opt.c
+		ft_memcpy.c ft_putendl.c ft_putendl_fd.c ft_save_val_opt.c ft_printf_c.c
 		
 OBJ = $(SRC:.c=.o)
 
-FLAG = -Wall -Wextra -Werror
+FLAG = -Wall -Wextra -Werror -g
 
 all :  $(NAME)
 
