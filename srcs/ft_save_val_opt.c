@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 19:06:00 by kgricour          #+#    #+#             */
-/*   Updated: 2018/03/06 17:41:19 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/03/06 23:01:57 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,19 @@ int			ft_check_point(char *opt, char *str)
 	(opt[i] == '.') ? check = 1 : check;
 	ft_uncheck_if(&check, ft_atoi(opt + i + 1), nbr_space, str);
 	return (check);
+}
+
+int			ft_print(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		(str[i] == '\1') ? ft_putchar(0) : ft_putchar(str[i]);
+		i++;
+	}
+	return (ft_strlen(str));
 }
 
 int			ft_count_nbr(unsigned long long value, int base)

@@ -6,7 +6,7 @@
 /*   By: kgricour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/12 20:35:13 by kgricour          #+#    #+#             */
-/*   Updated: 2018/03/06 22:40:54 by kgricour         ###   ########.fr       */
+/*   Updated: 2018/03/06 23:02:01 by kgricour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,17 +96,4 @@ void		ft_add_plus(char *opt, char **tmp2)
 		if (ft_strchr(opt, '.'))
 			ft_precision((char **)tmp2, opt);
 	}
-}
-
-int			ft_print(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		(str[i] == '\1') ? ft_putchar(0) : ft_putchar(str[i]);
-		i++;
-	}
-	return (ft_strlen(str));
 }
